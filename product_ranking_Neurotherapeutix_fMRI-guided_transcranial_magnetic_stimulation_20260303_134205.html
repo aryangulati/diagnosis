@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product Ranking Report — fMRI-guided transcranial magnetic stimulation · Neurotherapeutix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080d18;--s1:#0f1624;--s2:#16202f;--bdr:#1e2d42;
+  --txt:#dce8f5;--muted:#4e6a87;--accent:#3b82f6;
+  --teal:#0ea5e9;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;font-size:14px;line-height:1.55}
+
+header{background:linear-gradient(135deg,#060d1a 0%,#0d1829 60%,#0a1520 100%);border-bottom:1px solid var(--bdr);padding:1.8rem 2.5rem;display:flex;align-items:flex-start;justify-content:space-between;gap:2rem}
+.h-left h1{font-size:1.35rem;font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.h-left h1 .prod{color:var(--teal)}
+.h-left h1 .brand{color:#7dd3fc}
+.h-left .sub{color:var(--muted);font-size:.75rem;font-family:'IBM Plex Mono',monospace;margin-top:.4rem}
+.h-right{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);white-space:nowrap}
+
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);background:var(--bdr);border-bottom:1px solid var(--bdr);gap:1px}
+.kpi{background:var(--s1);padding:1.4rem 1.8rem}
+.kpi-lbl{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.35rem}
+.kpi-val{font-size:2rem;font-weight:800;font-family:'IBM Plex Mono',monospace;line-height:1}
+.kpi-sub{font-size:.68rem;color:var(--muted);margin-top:.25rem}
+.kv-hi{color:var(--green)}.kv-mid{color:var(--amber)}.kv-lo{color:var(--red)}
+
+main{padding:2rem 2.5rem;max-width:1500px;margin:0 auto}
+section{margin-bottom:2.5rem}
+.sec-title{font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin-bottom:1rem;font-family:'IBM Plex Mono',monospace;display:flex;align-items:center;gap:.6rem}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--bdr)}
+
+.dtable{width:100%;border-collapse:collapse;background:var(--s1);border-radius:8px;overflow:hidden;border:1px solid var(--bdr)}
+.dtable th{background:var(--s2);padding:.55rem 1rem;text-align:left;font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--bdr)}
+.dtable td{padding:.7rem 1rem;border-bottom:1px solid var(--bdr);vertical-align:middle}
+.dtable tr:last-child td{border-bottom:none}
+.dtable tr:hover td{background:rgba(59,130,246,.04)}
+.target-row td{background:rgba(14,165,233,.06)!important}
+.td-rank{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:.78rem;width:36px}
+.prod-name{font-weight:700;font-size:.9rem}
+.prod-brand{font-size:.72rem;color:var(--muted);margin-top:1px}
+.td-rate{min-width:160px}
+.bar-wrap{display:flex;align-items:center;gap:.5rem}
+.bar-fill{height:5px;background:linear-gradient(90deg,var(--accent),var(--teal));border-radius:3px;min-width:2px}
+.bar-label{font-family:'IBM Plex Mono',monospace;font-size:.78rem;font-weight:600;white-space:nowrap}
+.td-queries,.td-avgrank{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted)}
+.td-kws{font-size:.72rem;color:var(--muted);max-width:260px}
+.badge{display:inline-block;padding:1px 5px;border-radius:3px;font-size:.62rem;font-weight:700;margin:1px;font-family:'IBM Plex Mono',monospace}
+.b-prominent{background:rgba(34,197,94,.15);color:#22c55e}
+.b-moderate{background:rgba(245,158,11,.15);color:#f59e0b}
+.b-brief{background:rgba(100,116,139,.15);color:#94a3b8}
+
+.gaps-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:860px){.gaps-grid{grid-template-columns:1fr}}
+.gap-card{background:var(--s1);border:1px solid var(--bdr);border-radius:8px;padding:1rem 1.2rem;transition:border-color .2s}
+.gap-card:hover{border-color:var(--accent)}
+.gap-top{display:flex;align-items:center;gap:.45rem;margin-bottom:.45rem;flex-wrap:wrap}
+.gdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.gkw{font-weight:700;font-size:.9rem}
+.gfreq{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted);white-space:nowrap}
+.gmeta{font-size:.73rem;margin-bottom:.45rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center}
+.gtype{font-weight:700;font-size:.65rem;font-family:'IBM Plex Mono',monospace}
+.gcomps{color:var(--muted)}
+.has-yes{color:var(--green);font-size:.68rem;font-weight:600}
+.has-no{color:var(--red);font-size:.68rem;font-weight:600}
+.gaction{background:var(--s2);border-radius:4px;padding:.35rem .6rem;font-size:.73rem;color:#94a3b8;margin:.4rem 0;line-height:1.4}
+.gqueries{list-style:none;margin:.35rem 0}
+.gqueries li{font-size:.7rem;color:var(--muted);padding:1px 0}
+.gqueries li::before{content:'↳ ';color:var(--accent)}
+details.gen-wrap{margin-top:.7rem;border-top:1px solid var(--bdr);padding-top:.7rem}
+details.gen-wrap summary{cursor:pointer;font-size:.76rem;font-weight:600;color:var(--teal);list-style:none;display:flex;align-items:center;gap:.35rem}
+details.gen-wrap summary:hover{color:#7dd3fc}
+.gen-body{margin-top:.7rem;padding:1rem;background:var(--bg);border-radius:6px;font-size:.8rem;line-height:1.7;color:#cbd5e1;border-left:3px solid var(--accent)}
+.gen-body h3{font-size:.98rem;font-weight:700;color:var(--txt);margin-bottom:.4rem}
+.gen-body h4{font-size:.84rem;font-weight:600;color:var(--teal);margin:.7rem 0 .2rem}
+.gen-body h5{font-size:.8rem;font-weight:600;color:var(--muted);margin:.5rem 0 .2rem}
+.gen-body ul{margin-left:1rem;margin-top:.25rem}
+.gen-body li{margin-bottom:.2rem}
+
+.pq-file{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted);max-width:140px}
+.pq-q{font-size:.78rem;max-width:360px}
+.pq-sc{font-family:'IBM Plex Mono',monospace;font-size:.95rem;font-weight:700;text-align:center;width:50px}
+.pq-rank{font-family:'IBM Plex Mono',monospace;font-size:.85rem;font-weight:600;text-align:center;color:var(--txt)}
+.qbadge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:.65rem;font-weight:700;font-family:'IBM Plex Mono',monospace}
+.q-p{background:rgba(34,197,94,.15);color:#22c55e}
+.q-m{background:rgba(245,158,11,.15);color:#f59e0b}
+.q-b{background:rgba(100,116,139,.15);color:#94a3b8}
+.q-n{background:rgba(239,68,68,.15);color:#ef4444}
+.pq-comps{font-size:.72rem;color:var(--muted)}
+.pq-gaps{font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--amber)}
+
+footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.68rem;font-family:'IBM Plex Mono',monospace;border-top:1px solid var(--bdr)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-left">
+    <h1>
+      <span class="prod">fMRI-guided transcranial magnetic stimulation</span>
+      <span style="color:var(--muted)"> by </span>
+      <span class="brand">Neurotherapeutix</span>
+      — LLM Product Ranking Report
+    </h1>
+    <div class="sub">Generated 2026-03-03 13:42 &nbsp;·&nbsp; 1 queries analysed &nbsp;·&nbsp; gemini-2.5-flash</div>
+  </div>
+  <div class="h-right">
+    <div>AEO / GEO Product Intelligence</div>
+    <div>product_ranking_analyzer</div>
+  </div>
+</header>
+
+<div class="kpi-strip">
+  <div class="kpi">
+    <div class="kpi-lbl">Product Mention Rate</div>
+    <div class="kpi-val kv-hi">100.0%</div>
+    <div class="kpi-sub">1 of 1 queries</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-lbl">Avg Visibility Score</div>
+    <div class="kpi-val kv-lo">0.0</div>
+    <div class="kpi-sub">0–100 scale</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-lbl">Avg Rank When Mentioned</div>
+    <div class="kpi-val kv-lo">#7.0</div>
+    <div class="kpi-sub">lower = better</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-lbl">Competitor Products</div>
+    <div class="kpi-val kv-mid">6</div>
+    <div class="kpi-sub">direct product competitors</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-lbl">Content Gaps</div>
+    <div class="kpi-val kv-lo">8</div>
+    <div class="kpi-sub">top 5 have generated copy</div>
+  </div>
+</div>
+
+<main>
+  <section>
+    <div class="sec-title">Competitor Product Mention Rates — ranked by LLM visibility</div>
+    <table class="dtable">
+      <thead>
+        <tr>
+          <th>#</th><th>Product</th><th>Mention Rate</th>
+          <th>Queries</th><th>Avg Rank</th><th>Quality</th><th>Feature Keywords</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="">
+          <td class="td-rank">#1</td>
+          <td class="td-product">
+            <div class="prod-name">Greenbrook TMS</div>
+            <div class="prod-brand">Greenbrook TMS</div>
+          </td>
+          <td class="td-rate">
+            <div class="bar-wrap">
+              <div class="bar-fill" style="width:100%"></div>
+              <span class="bar-label">100.0%</span>
+            </div>
+          </td>
+          <td class="td-queries">1/1</td>
+          <td class="td-avgrank">#1.0</td>
+          <td class="td-badges"><span class="badge b-prominent">1&nbsp;P</span></td>
+          <td class="td-kws">large national TMS network · use NeuroStar TMS systems · focus exclusively on TMS for depression and OCD · high insurance acceptance rates · work with most major insurers including Medicare and Medicaid</td>
+        </tr>
+        <tr class="">
+          <td class="td-rank">#2</td>
+          <td class="td-product">
+            <div class="prod-name">NeuroStim TMS</div>
+            <div class="prod-brand">NeuroStim TMS</div>
+          </td>
+          <td class="td-rate">
+            <div class="bar-wrap">
+              <div class="bar-fill" style="width:100%"></div>
+              <span class="bar-label">100.0%</span>
+            </div>
+          </td>
+          <td class="td-queries">1/1</td>
+          <td class="td-avgrank">#2.0</td>
+          <td class="td-badges"><span class="badge b-prominent">1&nbsp;P</span></td>
+          <td class="td-kws">focus on affordability and insurance navigation · offer a standard 6-week TMS protocol · known for flexible scheduling including early morning and evening slots</td>
+        </tr>
+        <tr class="">
+          <td class="td-rank">#3</td>
+          <td class="td-product">
+            <div class="prod-name">BrainsWay Deep TMS Centers (NYC Affiliates)</div>
+            <div class="prod-brand">BrainsWay</div>
+          </td>
+          <td class="td-rate">
+            <div class="bar-wrap">
+              <div class="bar-fill" style="width:100%"></div>
+              <span class="bar-label">100.0%</span>
+            </div>
+          </td>
+          <td class="td-queries">1/1</td>
+          <td class="td-avgrank">#3.0</td>
+          <td class="td-badges"><span class="badge b-prominent">1&nbsp;P</span></td>
+          <td class="td-kws">uses an H-coil design that stimulates deeper and broader brain regions · FDA-cleared for depression, OCD, and smoking cessation · increasingly used for treatment-resistant cases</td>
+        </tr>
+        <tr class="">
+          <td class="td-rank">#4</td>
+          <td class="td-product">
+            <div class="prod-name">Advanced TMS Center</div>
+            <div class="prod-brand">Advanced TMS Center</div>
+          </td>
+          <td class="td-rate">
+            <div class="bar-wrap">
+              <div class="bar-fill" style="width:100%"></div>
+              <span class="bar-label">100.0%</span>
+            </div>
+          </td>
+          <td class="td-queries">1/1</td>
+          <td class="td-avgrank">#4.0</td>
+          <td class="td-badges"><span class="badge b-prominent">1&nbsp;P</span></td>
+          <td class="td-kws">Specializes in NeuroStar TMS and BrainsWay Deep TMS for depression, OCD, and anxiety · dedicated TMS-only practice model · experienced technicians · work with most insurance plans · Same-week intake appointments often available</td>
+        </tr>
+        <tr class="">
+          <td class="td-rank">#5</td>
+          <td class="td-product">
+            <div class="prod-name">Serenity Mental Health Centers</div>
+            <div class="prod-brand">Serenity Mental Health Centers</div>
+          </td>
+          <td class="td-rate">
+            <div class="bar-wrap">
+              <div class="bar-fill" style="width:100%"></div>
+              <span class="bar-label">100.0%</span>
+            </div>
+          </td>
+          <td class="td-queries">1/1</td>
+          <td class="td-avgrank">#5.0</td>
+          <td class="td-badges"><span class="badge b-prominent">1&nbsp;P</span></td>
+          <td class="td-kws">offers TMS alongside ketamine infusions and medication management · may combine TMS with ketamine for treatment-resistant depression patients · accept insurance for TMS</td>
+        </tr>
+        <tr class="">
+          <td class="td-rank">#6</td>
+          <td class="td-product">
+            <div class="prod-name">Columbia University Psychiatry (academic TMS program)</div>
+            <div class="prod-brand">Columbia University Psychiatry</div>
+          </td>
+          <td class="td-rate">
+            <div class="bar-wrap">
+              <div class="bar-fill" style="width:100%"></div>
+              <span class="bar-label">100.0%</span>
+            </div>
+          </td>
+          <td class="td-queries">1/1</td>
+          <td class="td-avgrank">#6.0</td>
+          <td class="td-badges"><span class="badge b-prominent">1&nbsp;P</span></td>
+          <td class="td-kws">offers both clinical and research-track TMS · research participants may access advanced protocols including theta burst stimulation (TBS) and accelerated TMS · Referral typically required</td>
+        </tr></tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-title">Product Content Gaps — features &amp; phrases missing from Neurotherapeutix's fMRI-guided transcranial magnetic stimulation</div>
+    <div class="gaps-grid">
+        <div class="gap-card">
+          <div class="gap-top">
+            <span class="gdot" style="background:#f4a261"></span>
+            <span class="gkw">"accepts insurance"</span>
+            <span class="gfreq">1/1 queries</span>
+          </div>
+          <div class="gmeta">
+            <span class="gtype" style="color:#f4a261">PRICING_TERM</span>
+            <span class="gcomps">Used by: <strong>Greenbrook TMS · NeuroStim TMS · Advanced TMS Center · Serenity Mental Health Centers</strong></span>
+            <span class="has-no">✗ Brand may lack this feature</span>
+          </div>
+          <div class="gaction">📌 Provide clear guidance on how patients typically fund treatment, beyond HSA/FSA, potentially detailing out-of-network benefits or financing options to manage expectations for higher costs.</div>
+          <ul class="gqueries"><li>Which TMS therapy clinics in NYC treat treatment-resistant depression without me…</li></ul>
+          
+            <details class="gen-wrap">
+              <summary>📝 View Generated Content</summary>
+              <div class="gen-body"><h3>NYC fMRI-Guided TMS for Treatment-Resistant Depression: Understanding Payment and Insurance Options</h3><br><br>If you're searching for TMS therapy clinics in NYC that treat treatment-resistant depression without medication, Neurotherapeutix offers a highly personalized approach using fMRI-guided transcranial magnetic stimulation. Our advanced method precisely targets the brain regions involved in depression, optimizing treatment outcomes for those seeking relief beyond conventional pharmacotherapy. Many patients considering this innovative therapy naturally wonder about coverage and whether our clinic <em>accepts insurance</em>.<br><br>While Neurotherapeutix operates as an out-of-network provider and does not directly process insurance claims, we are committed to helping you understand your options for funding this life-changing treatment.<br><br><h4>Navigating Treatment Costs and Financial Solutions</h4><br><br>We believe that access to effective care shouldn't be a barrier. Here’s how patients typically manage the investment in their mental health:<br><br><ul><li>  <strong>Out-of-Network Benefits:</strong> Many PPO insurance plans offer substantial out-of-network benefits for mental health services. Our team can provide you with the necessary documentation (superbills) to submit to your insurer for potential reimbursement after your treatment. We encourage you to contact your insurance provider directly to understand your specific benefits and reimbursement rates.</li>
+<li>  <strong>Health Savings Accounts (HSAs) & Flexible Spending Accounts (FSAs):</strong> These tax-advantaged accounts can be utilized to cover the costs of fMRI-guided TMS therapy, making it a more manageable expense.</li>
+<li>  <strong>Personalized Payment Plans:</strong> To alleviate upfront financial burdens, Neurotherapeutix offers flexible payment plans tailored to your circumstances. Our goal is to make this advanced, effective treatment accessible.</li>
+</ul>
+<h4>Your Path to Precision-Guided Care</h4><br><br>Neurotherapeutix is dedicated to providing cutting-edge, medication-free solutions for treatment-resistant depression. Our fMRI-guided TMS offers unparalleled precision, aiming for superior results compared to traditional TMS.<br><br>Ready to explore a new path to relief? Contact Neurotherapeutix today for a consultation and to discuss your specific financial questions. We're here to guide you.</div>
+            </details>
+        </div>
+        <div class="gap-card">
+          <div class="gap-top">
+            <span class="gdot" style="background:#e63946"></span>
+            <span class="gkw">"specific TMS device used (e.g., NeuroStar, BrainsWay, MagVenture)"</span>
+            <span class="gfreq">1/1 queries</span>
+          </div>
+          <div class="gmeta">
+            <span class="gtype" style="color:#e63946">FEATURE_BENEFIT</span>
+            <span class="gcomps">Used by: <strong>Greenbrook TMS · BrainsWay Deep TMS Centers (NYC Affiliates) · Advanced TMS Center</strong></span>
+            <span class="has-no">✗ Brand may lack this feature</span>
+          </div>
+          <div class="gaction">📌 Explicitly state the specific FDA-cleared TMS device/system utilized for treatment to align with patient expectations and common industry questions, differentiating between the device and the fMRI guidance.</div>
+          <ul class="gqueries"><li>Which TMS therapy clinics in NYC treat treatment-resistant depression without me…</li></ul>
+          
+            <details class="gen-wrap">
+              <summary>📝 View Generated Content</summary>
+              <div class="gen-body"><h3>Precision Treatment for Treatment-Resistant Depression: Beyond Standard TMS Devices</h3><br><br>Finding an effective, medication-free solution for treatment-resistant depression (TRD) in NYC often leads patients to inquire about specific TMS therapy clinics and the <strong>specific TMS device used</strong>, such as NeuroStar, BrainsWay, or MagVenture. At Neurotherapeutix, we offer a distinct and advanced approach that goes beyond these standard commercial systems. Our fMRI-guided transcranial magnetic stimulation (fMRI-guided TMS) provides a highly personalized treatment experience, precisely targeting the neural circuits involved in your depression to deliver optimal outcomes without medication.<br><br><h4>The Neurotherapeutix Advantage: fMRI-Guided Precision</h4><br><br>While many clinics utilize off-the-shelf TMS systems, our method incorporates functional MRI (fMRI) mapping to pinpoint the exact brain regions most relevant to your unique symptoms. This level of precision is crucial for maximizing therapeutic effect and minimizing side effects.<br><br><h5>How fMRI-Guided TMS Elevates Treatment:</h5><br><br><ul><li>  <strong>Personalized Target Identification:</strong> Unlike generic treatment protocols based on standard landmarks, fMRI allows us to identify your individual functional brain networks, ensuring the TMS coil is placed with pinpoint accuracy for maximum impact.</li>
+<li>  <strong>Enhanced Efficacy:</strong> By directly stimulating the dysfunctional circuits identified by fMRI, we optimize the treatment's ability to alleviate symptoms of treatment-resistant depression, offering a more effective path to remission.</li>
+<li>  <strong>Optimized Dosing and Placement:</strong> Your fMRI data informs the precise location and intensity of each TMS session, making your treatment uniquely tailored and highly efficient, distinguishing our approach from other TMS clinics.</li>
+</ul>
+If you're seeking a highly personalized and effective non-medication treatment for TRD in NYC, discover the power of fMRI-guided TMS.<br><br><strong>Contact Neurotherapeutix today to schedule a consultation and learn how our advanced approach can help you.</strong></div>
+            </details>
+        </div>
+        <div class="gap-card">
+          <div class="gap-top">
+            <span class="gdot" style="background:#e63946"></span>
+            <span class="gkw">"treats other conditions (e.g., OCD, anxiety, smoking cessation)"</span>
+            <span class="gfreq">1/1 queries</span>
+          </div>
+          <div class="gmeta">
+            <span class="gtype" style="color:#e63946">FEATURE_BENEFIT</span>
+            <span class="gcomps">Used by: <strong>Greenbrook TMS · BrainsWay Deep TMS Centers (NYC Affiliates) · Advanced TMS Center</strong></span>
+            <span class="has-no">✗ Brand may lack this feature</span>
+          </div>
+          <div class="gaction">📌 Specify if the fMRI-guided TMS can or does treat conditions beyond depression, such as OCD, anxiety, or other mental health disorders.</div>
+          <ul class="gqueries"><li>Which TMS therapy clinics in NYC treat treatment-resistant depression without me…</li></ul>
+          
+            <details class="gen-wrap">
+              <summary>📝 View Generated Content</summary>
+              <div class="gen-body"><h3>Neurotherapeutix NYC: Precision fMRI-Guided TMS for Treatment-Resistant Depression</h3><br><br>If you're in NYC seeking highly effective, non-medication solutions for treatment-resistant depression, Neurotherapeutix offers advanced fMRI-guided Transcranial Magnetic Stimulation (TMS). While TMS technology is actively explored for a broader range of conditions, including OCD, anxiety, or smoking cessation, our specialized program is exclusively dedicated to optimizing outcomes for individuals battling major depressive disorder.<br><br><h4>Unrivaled Precision for Depression</h4><br><br>Neurotherapeutix's fMRI-guided TMS stands apart by utilizing functional MRI to map your individual brain activity. This allows us to pinpoint the exact neural circuits associated with your depression, ensuring a highly accurate and personalized treatment plan that goes beyond generalized approaches.<br><br><h5>Benefits of Our Specialized Approach</h5><br><br><ul><li>  <strong>Personalized Targeting:</strong> Functional MRI enables us to tailor TMS therapy directly to your unique brain networks, maximizing efficacy specifically for treatment-resistant depression.</li>
+<li>  <strong>Optimized Outcomes:</strong> Our focused expertise ensures a dedicated approach to alleviating severe depressive symptoms, offering hope when conventional treatments have failed.</li>
+<li>  <strong>Dedicated Focus:</strong> Unlike general TMS applications that may broadly aim to treat other conditions like OCD or anxiety, our methodology is refined and specialized for the complex mechanisms of major depressive disorder.</li>
+</ul>
+Experience a truly individualized path to mental wellness. Contact Neurotherapeutix NYC today to learn how fMRI-guided TMS can transform your life.</div>
+            </details>
+        </div>
+        <div class="gap-card">
+          <div class="gap-top">
+            <span class="gdot" style="background:#e63946"></span>
+            <span class="gkw">"flexible scheduling (e.g., early morning, evening, same-week intake)"</span>
+            <span class="gfreq">1/1 queries</span>
+          </div>
+          <div class="gmeta">
+            <span class="gtype" style="color:#e63946">FEATURE_BENEFIT</span>
+            <span class="gcomps">Used by: <strong>NeuroStim TMS · Advanced TMS Center</strong></span>
+            <span class="has-no">✗ Brand may lack this feature</span>
+          </div>
+          <div class="gaction">📌 Add information regarding scheduling flexibility (e.g., morning/evening slots, weekend availability) and typical wait times for intake appointments if applicable.</div>
+          <ul class="gqueries"><li>Which TMS therapy clinics in NYC treat treatment-resistant depression without me…</li></ul>
+          
+            <details class="gen-wrap">
+              <summary>📝 View Generated Content</summary>
+              <div class="gen-body"><h3>Neurotherapeutix: fMRI-Guided TMS in NYC for Treatment-Resistant Depression</h3><br><br>If you're searching for advanced, medication-free treatment options for severe, treatment-resistant depression in New York City, Neurotherapeutix offers cutting-edge fMRI-guided Transcranial Magnetic Stimulation (TMS). We understand that integrating a new therapy into your demanding schedule is a key consideration, and while the desire for highly <strong>flexible scheduling</strong>, including early morning or evening appointments, is common, our priority remains the unparalleled precision and effectiveness of your treatment.<br><br><h4>Unmatched Precision with fMRI-Guided TMS</h4><br><br>Unlike conventional TMS, our approach leverages functional MRI (fMRI) to precisely map your brain's unique neural networks. This allows for personalized targeting of the exact regions associated with depression, enhancing therapeutic outcomes.<br><br><ul><li>  <strong>Individualized Brain Mapping:</strong> fMRI identifies the optimal target for your specific brain, maximizing treatment efficacy.</li>
+<li>  <strong>Targeted Stimulation:</strong> Ensures energy is delivered exactly where it's needed, improving safety and results.</li>
+<li>  <strong>Optimized Outcomes:</strong> This precision aims for superior and more consistent symptom reduction compared to standard TMS.</li>
+</ul>
+<h4>Your Personalized Treatment Journey at Neurotherapeutix</h4><br><br>Your path to relief begins with a comprehensive intake process, ensuring fMRI-guided TMS is the right fit for your needs.<br><br><ul><li>  <strong>Initial Consultation & Evaluation:</strong> Our experts conduct a thorough assessment to determine your eligibility and tailor a treatment plan.</li>
+<li>  <strong>fMRI Brain Mapping Session:</strong> This dedicated session precisely maps your brain's functional connectivity for personalized targeting.</li>
+<li>  <strong>Dedicated Treatment Sessions:</strong> Typically 4-6 weeks of daily sessions (Monday-Friday), each lasting approximately 20-30 minutes.</li>
+</ul>
+Regarding intake appointments, we strive to accommodate new patients as promptly as possible. While same-week intake may not always be available due to the specialized nature of our fMRI mapping and personalized treatment planning, we work to schedule your initial consultation efficiently. Our team will discuss current availability and typical wait times during your initial contact, ensuring clarity on your treatment timeline.<br><br><h4>Begin Your Path to Relief</h4><br><br>Ready to explore fMRI-guided TMS for treatment-resistant depression? Contact Neurotherapeutix today to schedule your initial consultation and learn how our precise, personalized approach can help you reclaim your well-being.</div>
+            </details>
+        </div>
+        <div class="gap-card">
+          <div class="gap-top">
+            <span class="gdot" style="background:#e63946"></span>
+            <span class="gkw">"accelerated TMS protocols"</span>
+            <span class="gfreq">1/1 queries</span>
+          </div>
+          <div class="gmeta">
+            <span class="gtype" style="color:#e63946">FEATURE_BENEFIT</span>
+            <span class="gcomps">Used by: <strong>Columbia University Psychiatry (academic TMS program)</strong></span>
+            <span class="has-no">✗ Brand may lack this feature</span>
+          </div>
+          <div class="gaction">📌 Indicate whether Neurotherapeutix offers or plans to offer accelerated, intensive, or theta burst stimulation (TBS) protocols, or explain why their fMRI-guided approach may provide comparable or superior benefits without these.</div>
+          <ul class="gqueries"><li>Which TMS therapy clinics in NYC treat treatment-resistant depression without me…</li></ul>
+          
+            <details class="gen-wrap">
+              <summary>📝 View Generated Content</summary>
+              <div class="gen-body"><h3>Beyond Accelerated TMS Protocols: Precision Treatment for Treatment-Resistant Depression</h3><br><br>For individuals seeking effective relief from treatment-resistant depression without medication, inquiries often include the potential benefits of <strong>accelerated TMS protocols</strong>. While approaches like accelerated, intensive, or theta burst stimulation (TBS) protocols focus on increasing treatment frequency, Neurotherapeutix employs a distinctly precise and personalized method: fMRI-guided transcranial magnetic stimulation. Our fMRI-guided approach is designed to deliver highly targeted therapy, optimizing outcomes by focusing on individual brain connectivity rather than merely increasing session volume.<br><br><h4>Why fMRI-Guided TMS for Treatment-Resistant Depression?</h4><br><br>Our advanced fMRI-guided TMS stands apart by customizing treatment to your unique brain architecture, aiming for more efficient and robust responses compared to generalized protocols.<br><br><ul><li>  <strong>Precision Targeting:</strong> Unlike standard TMS, which uses generalized anatomical landmarks, our fMRI scans map your specific brain networks involved in depression. This allows us to target the exact neural circuitry requiring modulation, maximizing therapeutic effect and minimizing off-target stimulation.</li>
+<li>  <strong>Optimized Outcomes:</strong> By focusing on individual brain connectivity, fMRI guidance aims for more rapid and sustained improvement in symptoms. This personalized precision can lead to superior and more efficient therapeutic results, inherently addressing the desire for effective and timely relief without resorting to high-volume <strong>accelerated TMS protocols</strong>.</li>
+<li>  <strong>Non-Invasive & Medication-Free:</strong> Our therapy offers a powerful, non-pharmacological pathway to recovery, helping you find relief from depression without the systemic side effects often associated with medication.</li>
+</ul>
+Discover how Neurotherapeutix's fMRI-guided TMS can provide a precise and effective solution for your treatment-resistant depression. Contact us today to learn more and schedule a consultation.</div>
+            </details>
+        </div>
+        <div class="gap-card">
+          <div class="gap-top">
+            <span class="gdot" style="background:#06b6d4"></span>
+            <span class="gkw">"combined TMS with other therapies (e.g., ketamine infusions, medication management)"</span>
+            <span class="gfreq">1/1 queries</span>
+          </div>
+          <div class="gmeta">
+            <span class="gtype" style="color:#06b6d4">INTEGRATION</span>
+            <span class="gcomps">Used by: <strong>Serenity Mental Health Centers</strong></span>
+            <span class="has-no">✗ Brand may lack this feature</span>
+          </div>
+          <div class="gaction">📌 Clarify if Neurotherapeutix offers or partners for complementary treatments like ketamine infusions or medication management, or explain their rationale for focusing solely on fMRI-guided TMS.</div>
+          <ul class="gqueries"><li>Which TMS therapy clinics in NYC treat treatment-resistant depression without me…</li></ul>
+          
+        </div>
+        <div class="gap-card">
+          <div class="gap-top">
+            <span class="gdot" style="background:#457b9d"></span>
+            <span class="gkw">"experienced technicians"</span>
+            <span class="gfreq">1/1 queries</span>
+          </div>
+          <div class="gmeta">
+            <span class="gtype" style="color:#457b9d">TRUST_SIGNAL</span>
+            <span class="gcomps">Used by: <strong>Advanced TMS Center</strong></span>
+            <span class="has-no">✗ Brand may lack this feature</span>
+          </div>
+          <div class="gaction">📌 Explicitly highlight the experience, qualifications, and specialized training of the TMS technicians and clinical staff involved in delivering the fMRI-guided treatment.</div>
+          <ul class="gqueries"><li>Which TMS therapy clinics in NYC treat treatment-resistant depression without me…</li></ul>
+          
+        </div>
+        <div class="gap-card">
+          <div class="gap-top">
+            <span class="gdot" style="background:#457b9d"></span>
+            <span class="gkw">"FDA-cleared methodology/device"</span>
+            <span class="gfreq">1/1 queries</span>
+          </div>
+          <div class="gmeta">
+            <span class="gtype" style="color:#457b9d">TRUST_SIGNAL</span>
+            <span class="gcomps">Used by: <strong>BrainsWay Deep TMS Centers (NYC Affiliates)</strong></span>
+            <span class="has-no">✗ Brand may lack this feature</span>
+          </div>
+          <div class="gaction">📌 Clearly state that the underlying TMS device used is FDA-cleared for depression and elaborate on how the fMRI guidance enhances this FDA-cleared technology, addressing the 'beyond standard-of-care coverage' statement.</div>
+          <ul class="gqueries"><li>Which TMS therapy clinics in NYC treat treatment-resistant depression without me…</li></ul>
+          
+        </div></div>
+  </section>
+
+  <section>
+    <div class="sec-title">Per-Query Breakdown</div>
+    <table class="dtable">
+      <thead>
+        <tr>
+          <th>Source File</th><th>Query</th><th>Score</th>
+          <th>Rank</th><th>Quality</th><th>Top Competitors (#1–3)</th><th>Gaps</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="pq-file">sample_llm_answer_2.json</td>
+          <td class="pq-q">Which TMS therapy clinics in NYC treat treatment-resistant depression witho…</td>
+          <td class="pq-sc" style="color:#ef4444">0</td>
+          <td class="pq-rank">#7</td>
+          <td><span class="qbadge q-p">PROMINENT</span></td>
+          <td class="pq-comps">#1 Greenbrook TMS, #2 NeuroStim TMS, #3 BrainsWay Deep TMS Centers (NYC Affiliat</td>
+          <td class="pq-gaps">8</td>
+        </tr></tbody>
+    </table>
+  </section>
+</main>
+
+<footer>
+  product_ranking_analyzer &nbsp;·&nbsp; 1 queries &nbsp;·&nbsp;
+  Neurotherapeutix / fMRI-guided transcranial magnetic stimulation &nbsp;·&nbsp; 2026-03-03 13:42
+</footer>
+</body>
+</html>
