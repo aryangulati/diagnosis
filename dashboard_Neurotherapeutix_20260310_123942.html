@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PetalAI · fMRI-guided transcranial magnetic stimulation · Neurotherapeutix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060f1e;--s1:#0b1929;--s2:#0f2030;--bdr:#182d42;--txt:#d4e8f8;--muted:#3f6080;
+      --accent:#2563eb;--teal:#0ea5e9;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#a855f7}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;font-size:14px;line-height:1.6}
+a{color:var(--teal)}
+header{background:linear-gradient(150deg,#040e1c 0%,#091825 55%,#050f1a 100%);
+       border-bottom:1px solid var(--bdr);padding:1.8rem 2.5rem;
+       display:flex;align-items:flex-start;justify-content:space-between;gap:2rem}
+.htitle{font-size:1.4rem;font-weight:800;letter-spacing:-.025em;line-height:1.2}
+.htitle .prod{color:var(--teal)}.htitle .brd{color:#93c5fd}
+.hmeta{color:var(--muted);font-size:.71rem;font-family:'IBM Plex Mono',monospace;
+       margin-top:.5rem;display:flex;flex-wrap:wrap;gap:.9rem}
+.hdesc{color:#7090a8;font-size:.77rem;margin-top:.55rem;max-width:700px;line-height:1.5}
+.hright{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--muted);flex-shrink:0}
+.badge{display:inline-block;background:linear-gradient(90deg,#1d4ed8,#0369a1);color:#fff;
+       font-size:.59rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em}
+.dbadge{display:inline-block;color:#fff;font-size:.57rem;font-weight:700;padding:3px 9px;
+        border-radius:20px;letter-spacing:.06em;margin-left:.4rem}
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);background:var(--bdr);
+           border-bottom:1px solid var(--bdr);gap:1px}
+.kpi{background:var(--s1);padding:1.3rem 1.6rem}
+.kpi-lbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.3rem}
+.kpi-val{font-size:2.1rem;font-weight:800;font-family:'IBM Plex Mono',monospace;line-height:1}
+.kpi-sub{font-size:.62rem;color:var(--muted);margin-top:.25rem}
+.kv-hi{color:var(--green)}.kv-mid{color:var(--amber)}.kv-lo{color:var(--red)}
+.kpi-strip2{display:grid;grid-template-columns:repeat(3,1fr);background:var(--bdr);
+            border-bottom:1px solid var(--bdr);gap:1px}
+.kpi2{background:var(--s2);padding:.85rem 1.6rem;display:flex;align-items:center;gap:.8rem}
+.kpi2-v{font-size:1.6rem;font-weight:800;font-family:'IBM Plex Mono',monospace;color:var(--teal)}
+.kpi2-l{font-size:.58rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+main{padding:2rem 2.5rem;max-width:1580px;margin:0 auto}
+section{margin-bottom:2.2rem}
+.sec-title{font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);
+           margin-bottom:1rem;font-family:'IBM Plex Mono',monospace;
+           display:flex;align-items:center;gap:.6rem}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.stag{font-size:.52rem;padding:1px 7px;border-radius:3px;white-space:nowrap}
+.stag-blue{background:rgba(14,165,233,.12);color:var(--teal)}
+.stag-red{background:rgba(230,57,70,.12);color:#f87171}
+.stag-purple{background:rgba(168,85,247,.12);color:#c084fc}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:1000px){.grid2{grid-template-columns:1fr}}
+.card{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:1.4rem}
+.card-title{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);
+            margin-bottom:1rem;font-family:'IBM Plex Mono',monospace}
+.rd-row{display:flex;align-items:center;gap:.7rem;margin-bottom:.55rem}
+.rd-lbl{font-family:'IBM Plex Mono',monospace;font-size:.75rem;font-weight:600;width:70px;flex-shrink:0}
+.rd-track{flex:1;background:var(--s2);border-radius:3px;height:9px;overflow:hidden}
+.rd-bar{height:9px;border-radius:3px}
+.rd-cnt{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);width:36px;text-align:right}
+.tbl{width:100%;border-collapse:collapse;background:var(--s1);border-radius:8px;
+     overflow:hidden;border:1px solid var(--bdr)}
+.tbl th{background:var(--s2);padding:.5rem .9rem;text-align:left;font-size:.56rem;
+        text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--bdr)}
+.tbl td{padding:.62rem .9rem;border-bottom:1px solid var(--bdr);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(37,99,235,.04)}
+.target-row td{background:rgba(14,165,233,.05)!important;border-left:2px solid var(--teal)}
+.target-tag{display:inline-block;background:rgba(14,165,233,.18);color:var(--teal);
+            font-size:.53rem;padding:1px 5px;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-weight:700}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--muted);text-align:center}
+.fw7{font-weight:700}.muted{color:var(--muted)}
+.td-prod{min-width:150px}.pname{font-weight:700;font-size:.88rem}.pbrand{font-size:.7rem;color:var(--muted)}
+.td-bname{font-size:.88rem;min-width:150px}
+.td-persona{font-size:.75rem;max-width:310px}
+.td-query{font-size:.76rem;max-width:400px}
+.td-llms{font-size:.64rem;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.kws-cell{font-size:.7rem;color:var(--muted);max-width:290px}
+.td-tags{max-width:480px}
+.empty{text-align:center;color:var(--muted);padding:1.5rem;font-size:.79rem}
+.empty-card{background:var(--s1);border:1px dashed var(--bdr);border-radius:8px;
+            text-align:center;color:var(--muted);padding:2rem;font-size:.82rem}
+.btrack{display:flex;align-items:center;background:var(--s2);border-radius:4px;
+        height:19px;position:relative;overflow:hidden;min-width:80px}
+.bfill{height:100%;border-radius:4px;min-width:2px}
+.bval{position:absolute;right:6px;font-family:'IBM Plex Mono',monospace;
+      font-size:.67rem;font-weight:600;color:var(--txt)}
+.bwrap2{display:flex;align-items:center;gap:.5rem;min-width:120px}
+.btrack-inner{flex:1;background:var(--s2);border-radius:2px;height:5px;overflow:hidden}
+.bfill2{height:5px;background:linear-gradient(90deg,var(--accent),var(--teal));border-radius:2px;min-width:2px}
+.bval2{font-family:'IBM Plex Mono',monospace;font-size:.74rem;font-weight:700;color:var(--txt);white-space:nowrap}
+.td-bar2{min-width:130px}
+.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:.69rem;
+      font-weight:600;font-family:'IBM Plex Mono',monospace}
+.qbadge{display:inline-block;padding:2px 6px;border-radius:3px;font-size:.62rem;
+        font-weight:700;font-family:'IBM Plex Mono',monospace}
+.q-p{background:rgba(34,197,94,.15);color:#22c55e}
+.q-m{background:rgba(245,158,11,.15);color:#f59e0b}
+.q-b{background:rgba(100,116,139,.15);color:#94a3b8}
+.q-n{background:rgba(239,68,68,.15);color:#ef4444}
+.kwtag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:.67rem;margin:2px;font-weight:500}
+.gap-kw{background:rgba(230,57,70,.1);color:#f87171;border:1px solid rgba(230,57,70,.25)}
+.shared-kw{background:rgba(34,197,94,.1);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
+.gap-cnt{color:#f87171!important;font-weight:700}
+.legend-row{display:flex;gap:1.5rem;margin-bottom:.8rem;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:.4rem;font-size:.66rem;color:var(--muted)}
+.legend-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.gaps-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:900px){.gaps-grid{grid-template-columns:1fr}}
+.gap-card{background:var(--s1);border:1px solid var(--bdr);border-radius:9px;
+          padding:1.1rem 1.3rem;transition:border-color .2s}
+.gap-card:hover{border-color:var(--accent)}
+.gap-top{display:flex;align-items:center;gap:.45rem;margin-bottom:.4rem;flex-wrap:wrap}
+.gdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.gkw{font-weight:700;font-size:.91rem}
+.gtype-b{display:inline-block;padding:1px 7px;border-radius:3px;font-size:.59rem;
+         font-weight:700;font-family:'IBM Plex Mono',monospace}
+.gfreq{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--muted);white-space:nowrap}
+.gmeta{font-size:.72rem;margin-bottom:.4rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center}
+.gcomps{color:var(--muted)}
+.has-yes{color:var(--green);font-size:.67rem;font-weight:600}
+.has-no{color:var(--red);font-size:.67rem;font-weight:600}
+.gaction{background:var(--s2);border-radius:4px;padding:.32rem .65rem;font-size:.72rem;
+         color:#94a3b8;margin:.38rem 0;line-height:1.5;border-left:2px solid var(--accent)}
+.gqueries{list-style:none;margin:.32rem 0}
+.gqueries li{font-size:.68rem;color:var(--muted);padding:2px 0}
+.gqueries li::before{content:'↳ ';color:var(--accent)}
+details.gen-wrap{margin-top:.7rem;border-top:1px solid var(--bdr);padding-top:.65rem}
+details.gen-wrap summary{cursor:pointer;font-size:.75rem;font-weight:700;color:#c084fc;
+                         list-style:none;display:flex;align-items:center;gap:.35rem}
+details.gen-wrap summary:hover{color:#e9d5ff}
+.gen-body{margin-top:.65rem;padding:1rem;background:var(--bg);border-radius:6px;
+          font-size:.79rem;line-height:1.75;color:#cbd5e1;border-left:3px solid #7c3aed}
+.gen-body h3{font-size:.97rem;font-weight:800;color:var(--txt);margin-bottom:.45rem}
+.gen-body h4{font-size:.83rem;font-weight:700;color:var(--teal);margin:.75rem 0 .22rem}
+.gen-body h5{font-size:.79rem;font-weight:600;color:var(--muted);margin:.5rem 0 .2rem}
+.gen-body ul{margin-left:1rem;margin-top:.25rem}
+.gen-body li{margin-bottom:.22rem}
+.sp-wrap{display:flex;align-items:flex-end;gap:3px;height:72px;padding-bottom:4px}
+.spbar{background:linear-gradient(180deg,var(--teal),var(--accent));border-radius:2px 2px 0 0;flex-shrink:0}
+.spbar:hover{opacity:.7;cursor:pointer}
+.sp-axis{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;
+         font-size:.59rem;color:var(--muted);margin-top:.5rem}
+footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.62rem;
+       font-family:'IBM Plex Mono',monospace;border-top:1px solid var(--bdr);margin-top:2rem}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="htitle"><span class="prod">fMRI-guided transcranial magnetic stimulation</span> <span style="color:var(--muted)">·</span> <span class="brd">Neurotherapeutix</span></div>
+    <div class="hmeta">
+      <span>📍 New York City, USA</span>
+      <span>🔗 <a href="https://neurotherapeutixnyc.com/" target="_blank">https://neurotherapeutixnyc.com/</a></span>
+      <span>📊 18 scored responses</span>
+      <span>🕒 2026-03-10 12:39</span>
+    </div>
+    <div class="hdesc">Neurotherapeutix NYC offers personalized, fMRI-guided TMS and advanced brain mapping in Manhattan for depression, anxiety, PTSD, TBI, post-concussion syndrome, OCD, Alzheimer's, Parkinson's, autism, and more. Located at 171 East 74th Street, Manhattan. Dr. Marta Moreno (Clinical Director) and Dr. Alayar Kangarlu (Director of MRI, Columbia University affiliation) use resting-state fMRI to map each patient's unique neural circuits before every treatment.</div>
+  </div>
+  <div class="hright">
+    <div style="margin-bottom:.4rem">
+      <span class="badge">PetalAI</span>
+      <span class="dbadge" style="background:linear-gradient(90deg,#7c3aed,#4f46e5)">LLM Diagnosis ✓</span>
+    </div>
+    <div>AEO / GEO Product Intelligence</div>
+    <div style="margin-top:.25rem">petalai_pipeline.py</div>
+  </div>
+</header>
+
+<div class="kpi-strip">
+  <div class="kpi"><div class="kpi-lbl">Mention Rate</div>
+    <div class="kpi-val kv-mid">50.0%</div>
+    <div class="kpi-sub">responses with visibility &gt; 0</div></div>
+  <div class="kpi"><div class="kpi-lbl">Avg Visibility</div>
+    <div class="kpi-val kv-mid">50.0</div>
+    <div class="kpi-sub">0–100 · median 50.0</div></div>
+  <div class="kpi"><div class="kpi-lbl">Avg Consideration</div>
+    <div class="kpi-val kv-mid">49.4</div>
+    <div class="kpi-sub">0–100 scale</div></div>
+  <div class="kpi"><div class="kpi-lbl">Avg AI Rank</div>
+    <div class="kpi-val kv-hi">#1</div>
+    <div class="kpi-sub">best #1 · lower = better</div></div>
+  <div class="kpi"><div class="kpi-lbl">Total Responses</div>
+    <div class="kpi-val kv-mid">18</div>
+    <div class="kpi-sub">across all queries &amp; LLMs</div></div>
+</div>
+
+<div class="kpi-strip2">
+  <div class="kpi2">
+    <div class="kpi2-v">24</div>
+    <div class="kpi2-l">Competitor Products<br>Detected by LLMs</div>
+  </div>
+  <div class="kpi2">
+    <div class="kpi2-v" style="color:#f87171">49</div>
+    <div class="kpi2-l">Visibility &amp; Content<br>Gaps Identified</div>
+  </div>
+  <div class="kpi2">
+    <div class="kpi2-v" style="color:#c084fc">5</div>
+    <div class="kpi2-l">Gap-Filling Pieces<br>Generated</div>
+  </div>
+</div>
+
+<main>
+
+<div class="grid2">
+  <div class="card">
+    <div class="card-title">AI Ranking Position Distribution</div>
+    <div class="rd-row"><span class="rd-lbl">#1</span><div class="rd-track"><div class="rd-bar" style="width:100%;background:#22c55e"></div></div><span class="rd-cnt">9</span></div><div class="rd-row"><span class="rd-lbl">#2</span><div class="rd-track"><div class="rd-bar" style="width:0%;background:#4ade80"></div></div><span class="rd-cnt">0</span></div><div class="rd-row"><span class="rd-lbl">#3</span><div class="rd-track"><div class="rd-bar" style="width:0%;background:#f59e0b"></div></div><span class="rd-cnt">0</span></div><div class="rd-row"><span class="rd-lbl">#4-5</span><div class="rd-track"><div class="rd-bar" style="width:0%;background:#fb923c"></div></div><span class="rd-cnt">0</span></div><div class="rd-row"><span class="rd-lbl">6+</span><div class="rd-track"><div class="rd-bar" style="width:0%;background:#ef4444"></div></div><span class="rd-cnt">0</span></div><div class="rd-row"><span class="rd-lbl">Not ranked</span><div class="rd-track"><div class="rd-bar" style="width:100%;background:#374151"></div></div><span class="rd-cnt">9</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Performance by LLM Provider</div>
+    <table class="tbl">
+      <thead><tr><th>Model</th><th>Responses</th><th>Avg Visibility</th><th>Mention Rate</th><th>Consideration</th><th>Avg Rank</th></tr></thead>
+      <tbody><tr><td><span class="pill" style="background:#3b82f622;color:#3b82f6;border:1px solid #3b82f655">gemini</span></td><td class="mono">9</td><td><div class="btrack"><div class="bfill" style="width:100%;background:#3b82f6"></div><span class="bval">100.0</span></div></td><td class="mono">100.0%</td><td class="mono">98.9</td><td class="mono">#1</td></tr>
+<tr><td><span class="pill" style="background:#0ea5e922;color:#0ea5e9;border:1px solid #0ea5e955">openai</span></td><td class="mono">9</td><td><div class="btrack"><div class="bfill" style="width:0%;background:#0ea5e9"></div><span class="bval">0.0</span></div></td><td class="mono">0.0%</td><td class="mono">0.0</td><td class="mono">—</td></tr>
+</tbody>
+    </table>
+  </div>
+</div>
+
+<section>
+  <div class="sec-title">Competitor Products Ranked in LLM Responses
+    <span class="stag stag-blue">LLM EXTRACTED FROM RESPONSE TEXT</span></div>
+  <table class="tbl">
+    <thead><tr><th>#</th><th>Product</th><th>Mention Rate</th><th>Responses</th><th>Avg Rank</th><th>Quality</th><th>Feature Keywords LLMs Associate With This Product</th></tr></thead>
+    <tbody><tr class=""><td class="mono muted">#1</td><td class="td-prod"><div class="pname">MRI-guided neuronavigation TMS for TBI/concussion</div><div class="pbrand">Mount Sinai Health System – Center for Neuromodulation</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">comprehensive Neuromodulation program · utilizes MRI-guided neuronavigation where structural MRI scans of the patient's brain are used · precisely map target areas for TMS coil placement · ensures highly accurate stimulation of specific cortical regions · offers TMS for Traumatic Brain Injury (TBI)/concussion · treatment plans are individualized</td></tr>
+<tr class=""><td class="mono muted">#2</td><td class="td-prod"><div class="pname">Advanced TMS services</div><div class="pbrand">Mount Sinai Health System</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td></td><td class="kws-cell">often incorporating neuronavigation for precise targeting · utilizes state-of-the-art TMS devices · employing MRI-based neuronavigation to guide coil placement to specific anatomical brain regions · involved in research that explores fMRI applications for neuromodulation · TMS is typically integrated into a multidisciplinary neuro-rehabilitation plan · standard TMS protocols typically involve daily sessions (5 times a week) for 4-6 weeks, totaling 20-30 sessions</td></tr>
+<tr class=""><td class="mono muted">#3</td><td class="td-prod"><div class="pname">Advanced TMS (with fMRI data integration)</div><div class="pbrand">NYU Langone Health</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">comprehensive range of neurological and psychiatric services, including advanced TMS · sophisticated neuronavigation systems and extensive research capabilities · can incorporate fMRI data for highly precise targeting, especially for complex cases like PCS · Offers TMS for various neurological and psychiatric conditions, including symptoms related to Traumatic Brain Injury (TBI) · approach is rooted in academic research and clinical excellence · Employs advanced neuronavigation systems to precisely target brain regions</td></tr>
+<tr class=""><td class="mono muted">#4</td><td class="td-prod"><div class="pname">Neuromodulation services</div><div class="pbrand">NYU Langone Health – Center for Neuromodulation</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">comprehensive neuromodulation services · backed by extensive research in neuroscience · utilizes a range of advanced neuroimaging techniques, including fMRI and Diffusion Tensor Imaging (DTI) · capacity to integrate functional brain data for precise targeting is substantial · Strong research programs in cognitive neuroscience · treatment of cognitive dysfunction</td></tr>
+<tr class=""><td class="mono muted">#5</td><td class="td-prod"><div class="pname">Neurofeedback training (LORETA Z-score neurofeedback)</div><div class="pbrand">Brain Wellness Center (NYC)</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">LORETA Z-score neurofeedback · QEEG brain map · 20 to 40 sessions · 2-3 times per week · 45-60 minutes · $175 to $275</td></tr>
+<tr class=""><td class="mono muted">#6</td><td class="td-prod"><div class="pname">TMS (Center for Neuromodulation)</div><div class="pbrand">NYU Langone Health</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td></td><td class="kws-cell">Offers state-of-the-art TMS, often guided by structural MRI · primary clinical service targets conditions like treatment-resistant depression and OCD · hub for neuroscientific research and advanced neuromodulation techniques · may utilize various neuroimaging techniques for patient assessment · Customization typically involves adjusting stimulation parameters and coil placement based on individual motor thresholds and structural brain anatomy · Explicit fMRI-guided cognitive enhancement protocols are less commonly offered as a standard commercial service but may be available through research studies or highly specialized consultations</td></tr>
+<tr class=""><td class="mono muted">#7</td><td class="td-prod"><div class="pname">TMS (Division of Neuromodulation)</div><div class="pbrand">Columbia University Medical Center</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td></td><td class="kws-cell">Provides advanced TMS services as part of a comprehensive psychiatric program · involved in cutting-edge research in neuromodulation · offer personalized treatment plans for psychiatric conditions · fMRI-guided TMS specifically for executive function enhancement is typically an area of research rather than a standard clinical offering · insurance coverage is typically for FDA-approved conditions · Consultations for cognitive enhancement would likely be out-of-pocket</td></tr>
+<tr class=""><td class="mono muted">#8</td><td class="td-prod"><div class="pname">Structural MRI-Guided TMS</div><div class="pbrand">Columbia University Irving Medical Center / NewYork-Presbyterian</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">incorporates advanced neuroimaging for precise targeting · primarily utilizing structural MRI (sMRI) for neuronavigation · at the forefront of TMS research and advanced protocols · Individual sMRI scans are used to map brain anatomy and guide coil placement · Standard protocol involves 36 sessions over 6-9 weeks · accelerated protocols and theta burst stimulation (TBS) when appropriate</td></tr>
+<tr class=""><td class="mono muted">#9</td><td class="td-prod"><div class="pname">Advanced TMS with Sophisticated Mapping</div><div class="pbrand">Columbia University / NewYork-Presbyterian (Department of Psychiatry)</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">leading academic center for neuromodulation · advanced TMS with sophisticated mapping · employs advanced structural MRI and functional connectivity analysis for individualized target localization · utilizing sophisticated neuronavigation systems (e.g., Brainsight) · research programs actively integrate fMRI data to refine TMS targeting · Standard FDA-approved TMS protocols are offered</td></tr>
+<tr class=""><td class="mono muted">#10</td><td class="td-prod"><div class="pname">advanced TMS with individualized targeting (structural MRI-guided neuronavigation)</div><div class="pbrand">Columbia University Irving Medical Center / NewYork-Presbyterian</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">major academic and research institution · advanced TMS with individualized targeting · strong contender for precision treatment · Utilizes structural MRI-guided neuronavigation (Brainsight system) · precisely map the patient's brain anatomy · target the TMS coil based on individual neuroanatomy rather than scalp measurements</td></tr>
+<tr class=""><td class="mono muted">#11</td><td class="td-prod"><div class="pname">MRI-guided neuronavigation TMS (with potential for PCS/TBI via research)</div><div class="pbrand">Columbia University Irving Medical Center – Division of Neuromodulation</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#3</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">robust neuromodulation program offering advanced TMS therapies · integrate clinical care with ongoing research · employs MRI-guided neuronavigation using individual patient structural MRI to precisely target brain regions · standard clinical TMS services typically rely on structural MRI for navigation · advanced TMS for conditions like PCS/TBI may be explored on a case-by-case basis or within research protocols · daily sessions (5 days a week) for 4-6 weeks</td></tr>
+<tr class=""><td class="mono muted">#12</td><td class="td-prod"><div class="pname">Advanced neuromodulation options including TMS</div><div class="pbrand">NYU Langone Health</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#3</td><td></td><td class="kws-cell">offers TMS with MRI-based neuronavigation for precise targeting · leverage advanced imaging for diagnosis and treatment planning in TBI · at the forefront of neurological research and rehabilitation · TMS protocols for TBI are often integrated into broader rehabilitation plans · typical TMS treatment involves 20-36 sessions over 4-6 weeks · accepts many insurance providers</td></tr>
+<tr class=""><td class="mono muted">#13</td><td class="td-prod"><div class="pname">Personalized TMS (with advanced neuroimaging)</div><div class="pbrand">Mount Sinai Health System</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#3</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">dedicated to exploring and implementing advanced neuromodulation techniques, including TMS · emphasize personalized treatment plans developed through advanced neuroimaging · Provides TMS for psychiatric and neurological conditions, with a strong focus on personalized treatment planning informed by neuroimaging · capabilities in advanced neuroimaging and patient-specific targeting make them a strong contender · Utilizes neuroimaging techniques for precise TMS targeting · implying the capability to incorporate fMRI data into treatment protocols for optimizing coil placement and stimulation parameters</td></tr>
+<tr class=""><td class="mono muted">#14</td><td class="td-prod"><div class="pname">Brain Stimulation and Neuromodulation Program</div><div class="pbrand">Weill Cornell Medicine</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#3</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">robust Brain Stimulation and Neuromodulation Program · emphasizes using advanced neuroimaging to tailor treatments · explicitly states its use of "advanced neuroimaging and neurophysiological techniques" · includes fMRI and other modalities, allowing for refined targeting beyond standard anatomical landmarks · expertise in tailoring interventions and understanding brain networks · Specialists can consult on strategies for improving executive function and cognitive processing</td></tr>
+<tr class=""><td class="mono muted">#15</td><td class="td-prod"><div class="pname">Neurofeedback training</div><div class="pbrand">NY Neurofeedback</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#3</td><td></td><td class="kws-cell">data-driven approach · QEEG brain mapping · 30 and 60 sessions · 45-60 minutes · $150-$250 · package discounts often available</td></tr>
+</tbody>
+  </table>
+</section>
+
+<section>
+  <div class="sec-title">Keywords &amp; Phrases LLMs Associate With Competitors — Gaps for Neurotherapeutix
+    <span class="stag stag-red">COMPETITOR KEYWORD GAP ANALYSIS</span></div>
+  <div class="legend-row">
+    <div class="legend-item"><div class="legend-dot" style="background:#f87171"></div>Red = keywords target brand LACKS in LLM responses</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4ade80"></div>Green = keywords also attributed to target brand</div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>Competitor Brand</th><th>Keywords &amp; Phrases LLMs Use to Describe Them</th><th>Gap Keywords<br>(target lacks)</th><th>Shared</th></tr></thead>
+    <tbody><tr><td class="td-bname"><strong>NYU Langone Health</strong></td><td class="td-tags"><span class="kwtag gap-kw">Backed by extensive clinical research and the expertise of a major academic institution</span><span class="kwtag gap-kw">fMRI data can be integrated into treatment planning for individualized precision, particularly in complex TBI cases</span><span class="kwtag gap-kw">TMS protocols for TBI are often integrated into broader rehabilitation plans</span><span class="kwtag gap-kw">strong emphasis on evidence-based outcomes</span><span class="kwtag gap-kw">Standard TMS protocols typically involve 20-30 sessions over 4-6 weeks, customized based on patient assessment and neuroimaging findings</span><span class="kwtag gap-kw">may utilize various neuroimaging techniques for patient assessment</span><span class="kwtag gap-kw">NYC academic healthcare</span></td><td class="mono gap-cnt">34</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Mount Sinai Health System</strong></td><td class="td-tags"><span class="kwtag gap-kw">Known for its clinical excellence and research in neurological and psychiatric disorders</span><span class="kwtag gap-kw">Treats adults with treatment-resistant depression, OCD, and other conditions for which TMS is FDA-cleared</span><span class="kwtag gap-kw">dedicated to exploring and implementing advanced neuromodulation techniques, including TMS</span><span class="kwtag gap-kw">Multiple sites across NYC</span><span class="kwtag gap-kw">comprehensive neuromodulation program, including advanced TMS</span><span class="kwtag gap-kw">Utilizes neuroimaging techniques for precise TMS targeting</span><span class="kwtag gap-kw">Utilizes neuronavigation systems with structural MRI to guide precise coil placement</span></td><td class="mono gap-cnt">25</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Columbia University Irving Medical Center / NewYork-Presbyterian</strong></td><td class="td-tags"><span class="kwtag gap-kw">accelerated protocols and theta burst stimulation (TBS) when appropriate</span><span class="kwtag gap-kw">highly experienced clinicians</span><span class="kwtag gap-kw">Accepts a wide range of insurance plans, including many commercial PPO plans and Medicare</span><span class="kwtag gap-kw">sMRI for precise anatomical targeting is a significant advantage over less guided methods</span><span class="kwtag gap-kw">strong contender for precision treatment</span><span class="kwtag gap-kw">Standard protocol involves 36 sessions over 6-9 weeks</span><span class="kwtag gap-kw">primarily utilizing structural MRI (sMRI) for neuronavigation</span></td><td class="mono gap-cnt">24</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Weill Cornell Medicine</strong></td><td class="td-tags"><span class="kwtag gap-kw">neuromodulation research</span><span class="kwtag gap-kw">Treatment plans are developed through comprehensive assessment</span><span class="kwtag gap-kw">fMRI-informed TMS</span><span class="kwtag gap-kw">robust Brain Stimulation and Neuromodulation Program</span><span class="kwtag gap-kw">academic psychiatry excellence</span><span class="kwtag gap-kw">innovative brain health</span><span class="kwtag gap-kw">expertise in tailoring interventions and understanding brain networks</span></td><td class="mono gap-cnt">20</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>NYU Langone Health – Center for Neuromodulation</strong></td><td class="td-tags"><span class="kwtag gap-kw">For off-label use or pure cognitive enhancement, treatment may be considered private pay</span><span class="kwtag gap-kw">treatment of cognitive dysfunction</span><span class="kwtag gap-kw">utilizes a range of advanced neuroimaging techniques, including fMRI and Diffusion Tensor Imaging (DTI)</span><span class="kwtag gap-kw">Manhattan, NYC</span><span class="kwtag gap-kw">accepts various insurance plans for FDA-approved indications</span><span class="kwtag gap-kw">capacity to integrate functional brain data for precise targeting is substantial</span><span class="kwtag gap-kw">Treatment plans are highly individualized</span></td><td class="mono gap-cnt">14</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>RIVIA Mind (Formerly Advanced TMS of New York)</strong></td><td class="td-tags"><span class="kwtag gap-kw">focus on accelerated treatment options for faster symptom relief</span><span class="kwtag gap-kw">employ advanced stimulation techniques like Deep TMS and accelerated theta burst stimulation</span><span class="kwtag gap-kw">Structural MRI (sMRI)-guided neuronavigation for personalized targeting</span><span class="kwtag gap-kw">multiple locations across NYC</span><span class="kwtag gap-kw">emphasize structural MRI (sMRI)-guided TMS</span><span class="kwtag gap-kw">work with most major insurance carriers</span><span class="kwtag gap-kw">Multiple convenient locations</span></td><td class="mono gap-cnt">14</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>General TMS Clinics in Brooklyn</strong></td><td class="td-tags"><span class="kwtag gap-kw">A full course of standard TMS typically ranges from $10,000 to $15,000</span><span class="kwtag gap-kw">A typical course involves 30-36 sessions over 6-9 weeks</span><span class="kwtag gap-kw">Coil placement is guided by structural MRI scans or head measurements to target the dorsolateral prefrontal cortex (DLPFC)</span><span class="kwtag gap-kw">Primarily for individuals diagnosed with treatment-resistant depression or OCD</span><span class="kwtag gap-kw">typically use structural MRI or anatomical landmarking for coil placement, rather than fMRI for functional network targeting specifically for cognitive enhancement</span><span class="kwtag gap-kw">do not specialize in direct fMRI-guided cognitive enhancement</span><span class="kwtag gap-kw">Personalization primarily involves determining the individual's motor threshold (stimulation intensity) and precise coil positioning for the standard target areas</span></td><td class="mono gap-cnt">13</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>MidCity TMS</strong></td><td class="td-tags"><span class="kwtag gap-kw">Accepts a wide range of commercial insurance plans, including Aetna, Cigna, Empire BCBS, GHI, Oscar, Oxford, UnitedHealthcare, and Medicare</span><span class="kwtag gap-kw">Deep TMS also follows FDA-approved protocols</span><span class="kwtag gap-kw">technology that stimulates a broader and deeper brain region</span><span class="kwtag gap-kw">Reports high success rates</span><span class="kwtag gap-kw">assist with benefit verification and prior authorization</span><span class="kwtag gap-kw">Deep TMS achieving remission rates of up to 38.4% and response rates of 58%</span><span class="kwtag gap-kw">offers personalized treatment in a dedicated setting</span></td><td class="mono gap-cnt">13</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Columbia University / NewYork-Presbyterian (Department of Psychiatry)</strong></td><td class="td-tags"><span class="kwtag gap-kw">Benefits from extensive research and clinical experience</span><span class="kwtag gap-kw">employs advanced structural MRI and functional connectivity analysis for individualized target localization</span><span class="kwtag gap-kw">advanced TMS with sophisticated mapping</span><span class="kwtag gap-kw">Standard FDA-approved TMS protocols are offered</span><span class="kwtag gap-kw">5 days a week for 6 weeks</span><span class="kwtag gap-kw">personalized adjustments based on individual patient mapping and clinical response</span><span class="kwtag gap-kw">research programs actively integrate fMRI data to refine TMS targeting</span></td><td class="mono gap-cnt">11</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Weill Cornell Medicine / NewYork-Presbyterian</strong></td><td class="td-tags"><span class="kwtag gap-kw">For adults with major depressive disorder who have not responded to other treatments</span><span class="kwtag gap-kw">contributing to high success rates for appropriate candidates</span><span class="kwtag gap-kw">Employs individualized targeting using structural MRI scans</span><span class="kwtag gap-kw">Accepts most major insurance plans</span><span class="kwtag gap-kw">at the forefront of TMS treatment delivery and research</span><span class="kwtag gap-kw">Follows standard FDA-approved protocols, typically 30-36 sessions over 6-9 weeks</span><span class="kwtag gap-kw">advanced neuronavigation systems to precisely position the TMS coil</span></td><td class="mono gap-cnt">11</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>NYU Langone Health (Center for Neuromodulation)</strong></td><td class="td-tags"><span class="kwtag gap-kw">accepts many insurance plans</span><span class="kwtag gap-kw">provides effective TMS treatment for individuals with treatment-resistant depression</span><span class="kwtag gap-kw">typically receive TMS 5 days a week for 6 weeks</span><span class="kwtag gap-kw">Known for its strong research and clinical programs</span><span class="kwtag gap-kw">personalized TMS therapy</span><span class="kwtag gap-kw">highly accurate coil placement</span><span class="kwtag gap-kw">employs image-guided TMS, utilizing structural MRI to create a personalized map of each patient's brain</span></td><td class="mono gap-cnt">11</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Mount Sinai Health System (Center for Neuromodulation)</strong></td><td class="td-tags"><span class="kwtag gap-kw">5 days per week for 4-6 weeks</span><span class="kwtag gap-kw">accepts most major insurance plans</span><span class="kwtag gap-kw">strong research arm is actively involved in studies leveraging fMRI and other advanced imaging techniques</span><span class="kwtag gap-kw">each session lasting around 19-37 minutes</span><span class="kwtag gap-kw">comprehensive TMS services</span><span class="kwtag gap-kw">high-quality care with outcomes in line with large-scale TMS clinical trials</span><span class="kwtag gap-kw">emphasizing individualized treatment planning</span></td><td class="mono gap-cnt">9</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Mount Sinai Health System – Center for Neuromodulation</strong></td><td class="td-tags"><span class="kwtag gap-kw">20-36 sessions over several weeks (e.g., 5 sessions per week)</span><span class="kwtag gap-kw">ensures highly accurate stimulation of specific cortical regions</span><span class="kwtag gap-kw">utilizes MRI-guided neuronavigation where structural MRI scans of the patient's brain are used</span><span class="kwtag gap-kw">accepts many major insurance plans</span><span class="kwtag gap-kw">comprehensive Neuromodulation program</span><span class="kwtag gap-kw">treatment plans are individualized</span><span class="kwtag gap-kw">offers TMS for Traumatic Brain Injury (TBI)/concussion</span></td><td class="mono gap-cnt">8</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Brain Wellness Center (NYC)</strong></td><td class="td-tags"><span class="kwtag gap-kw">20 to 40 sessions</span><span class="kwtag gap-kw">LORETA Z-score neurofeedback</span><span class="kwtag gap-kw">$175 to $275</span><span class="kwtag gap-kw">Initial QEEG assessment... $400-$600</span><span class="kwtag gap-kw">QEEG brain map</span><span class="kwtag gap-kw">45-60 minutes</span><span class="kwtag gap-kw">2-3 times per week</span></td><td class="mono gap-cnt">7</td><td class="mono">0</td></tr>
+</tbody>
+  </table>
+</section>
+
+<section>
+  <div class="sec-title">Competitor Visibility Rankings — Comparison Snapshots
+    <span class="stag stag-blue">COMPARISONS.JSON</span></div>
+  <table class="tbl">
+    <thead><tr><th>#</th><th>Brand</th><th>Mention Rate</th><th>Consideration</th><th>Avg Rank</th><th>Feature Keywords</th></tr></thead>
+    <tbody><tr class=""><td class="mono muted">#1</td><td class="td-bname"><strong>Magnus Medical</strong></td><td><div class="btrack"><div class="bfill" style="width:100%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">88.0</span></div></td><td class="mono">89.0%</td><td class="mono">#1.4</td><td class="kws-cell">SAINT TMS system · accelerated fMRI-guided TMS · precision neurotargeting · FDA-cleared breakthrough device · rapid-acting depression treatment</td></tr>
+<tr class=""><td class="mono muted">#2</td><td class="td-bname"><strong>Columbia University Psychiatry</strong></td><td><div class="btrack"><div class="bfill" style="width:89%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">79.0</span></div></td><td class="mono">85.0%</td><td class="mono">#1.8</td><td class="kws-cell">academic TMS research · leading neuroscience department · clinical trials TMS · expert psychiatrists · neuromodulation programs</td></tr>
+<tr class="target-row"><td class="mono muted">#3</td><td class="td-bname"><strong>Neurotherapeutix&nbsp;<span class='target-tag'>TARGET</span></strong></td><td><div class="btrack"><div class="bfill" style="width:88%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">78.0</span></div></td><td class="mono">75.0%</td><td class="mono">#2.2</td><td class="kws-cell">fMRI-guided TMS · precision brain mapping · personalized neuromodulation · treatment-resistant depression · OCD and anxiety disorders</td></tr>
+<tr class=""><td class="mono muted">#4</td><td class="td-bname"><strong>NYU Langone Health</strong></td><td><div class="btrack"><div class="bfill" style="width:87%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">77.0</span></div></td><td class="mono">84.0%</td><td class="mono">#1.9</td><td class="kws-cell">university medical center TMS · advanced psychiatry services · fMRI-guided research · neuroscience leadership · patient care excellence</td></tr>
+<tr class=""><td class="mono muted">#5</td><td class="td-bname"><strong>Weill Cornell Medicine</strong></td><td><div class="btrack"><div class="bfill" style="width:86%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">76.0</span></div></td><td class="mono">83.0%</td><td class="mono">#2.0</td><td class="kws-cell">academic psychiatry excellence · neuromodulation research · fMRI-informed TMS · top NYC medical center · precision neurotherapeutics</td></tr>
+<tr class=""><td class="mono muted">#6</td><td class="td-bname"><strong>Greenbrook TMS</strong></td><td><div class="btrack"><div class="bfill" style="width:73%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">65.0</span></div></td><td class="mono">68.0%</td><td class="mono">#3.1</td><td class="kws-cell">national TMS provider · accessible locations · insurance accepted · depression and anxiety TMS · FDA-cleared TMS</td></tr>
+<tr class=""><td class="mono muted">#7</td><td class="td-bname"><strong>Advanced TMS Center</strong></td><td><div class="btrack"><div class="bfill" style="width:68%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">60.0</span></div></td><td class="mono">62.0%</td><td class="mono">#3.5</td><td class="kws-cell">specialized TMS clinic · advanced TMS protocols · personalized treatment plans · experienced TMS therapists · depression and OCD therapy</td></tr>
+<tr class=""><td class="mono muted">#8</td><td class="td-bname"><strong>Serenity Mental Health Centers</strong></td><td><div class="btrack"><div class="bfill" style="width:62%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">55.0</span></div></td><td class="mono">60.0%</td><td class="mono">#3.9</td><td class="kws-cell">comprehensive mental health · TMS therapy offered · multiple treatment options · anxiety and depression care · outpatient mental health services</td></tr>
+</tbody>
+  </table>
+</section>
+
+<section>
+  <div class="sec-title">
+    Product Visibility Gaps — Features &amp; Phrases Competitors Get Credit For That Neurotherapeutix Lacks
+    <span class="stag stag-red">VISIBILITY GAPS</span>
+    <span class="stag stag-purple">AI-GENERATED CONTENT ↓</span>
+  </div>
+  <div class="gaps-grid">
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"accepts a wide range of commercial insurance plans / most major insurance plans (e.g., Aetna, Cigna, UnitedHealthcare)"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University Irving Medical Center / NewYork-Presbyterian · Weill Cornell Medicine / NewYork-Presbyterian · Mount Sinai Health System · MidCity TMS</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly state the range of commercial insurance plans Neurotherapeutix accepts or works with (e.g., 'accepts many major commercial PPO plans' or list specific key plans), reinforcing their insurance support beyond Medicare and out-of-network assistance.</div>
+  <ul class="gqueries"><li>What clinics offer fMRI-guided transcranial magnetic stimulation for depression?</li></ul>
+  <details class="gen-wrap"><summary>📝 View Generated Content</summary><div class="gen-body"><h3>Accessing fMRI-Guided TMS for Depression: Insurance Coverage at Neurotherapeutix</h3><br><br>Neurotherapeutix specializes in cutting-edge <strong>fMRI-guided transcranial magnetic stimulation (TMS)</strong> for the effective treatment of depression. We are dedicated to making this advanced therapy accessible, understanding that financial considerations are paramount. We are pleased to confirm that Neurotherapeutix <strong>accepts a wide range of commercial insurance plans</strong>, including most major providers such as Aetna, Cigna, and UnitedHealthcare, to support your path to recovery.<br><br><h4>Why Choose fMRI-Guided TMS?</h4><br><br>fMRI-guided TMS represents a significant leap forward in depression treatment. By utilizing functional MRI brain imaging, we precisely map the neural circuits involved in depression, allowing for highly personalized and targeted TMS therapy. This precision enhances treatment efficacy and minimizes potential side effects, offering new hope for those who haven't found relief with traditional methods.<br><br><h4>Your Insurance & Treatment Accessibility</h4><br><br>We believe that access to effective care shouldn't be a barrier. Our administrative team is here to assist you in understanding your benefits and maximizing your coverage for fMRI-guided TMS.<br><br><ul><li>  <strong>Broad Commercial Coverage:</strong> Neurotherapeutix accepts many major commercial PPO plans, working diligently to ensure your treatment is covered.</li>
+<li>  <strong>Hassle-Free Verification:</strong> We streamline the process by verifying your benefits on your behalf, providing clarity on your out-of-pocket costs before treatment begins.</li>
+<li>  <strong>Dedicated Support:</strong> Our team provides guidance through the insurance landscape, addressing any questions you may have regarding claims and approvals.</li>
+</ul>
+Don't let insurance concerns delay your path to recovery.<br><br><strong>Contact Neurotherapeutix today to learn more about fMRI-guided TMS and verify your insurance coverage.</strong></div></details>
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"Insurance coverage for FDA-approved conditions (e.g., treatment-resistant depression, OCD)"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>TMS (Center for Neuromodulation) (NYU Langone Health) · TMS (Division of Neuromodulation) (Columbia University Medical Center) · Standard TMS (General TMS Clinics in Brooklyn)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly state whether Neurotherapeutix offers fMRI-guided TMS for FDA-approved conditions like depression or OCD, and if so, clarify the potential for insurance coverage for those specific treatments. If their focus is solely on self-pay cognitive enhancement, reinforce this specialization to manage expectations.</div>
+  <ul class="gqueries"><li>Where can I find personalized TMS protocol providers in Brooklyn for executive function …</li></ul>
+  <details class="gen-wrap"><summary>📝 View Generated Content</summary><div class="gen-body"><h3>Understanding Insurance Coverage for fMRI-Guided Transcranial Magnetic Stimulation for FDA-Approved Conditions</h3><br><br>At Neurotherapeutix, we specialize in advanced fMRI-guided transcranial magnetic stimulation (TMS) to deliver highly personalized treatment protocols. For patients seeking effective therapy for <strong>FDA-approved conditions, such as treatment-resistant depression and Obsessive-Compulsive Disorder (OCD)</strong>, navigating <strong>insurance coverage</strong> is a critical consideration. Our commitment is to provide precise, outcome-focused care.<br><br><h4>The Precision of fMRI-Guided TMS</h4><br><br><ul><li>  <strong>Personalized Treatment:</strong> Unlike standard TMS, fMRI guidance allows us to precisely map your unique brain anatomy and function. This enables the development of truly personalized TMS protocols, targeting specific neural circuits relevant to your condition, which is paramount for conditions like executive function improvement.</li>
+<li>  <strong>Enhanced Outcomes:</strong> This advanced precision aims to maximize therapeutic efficacy and minimize side effects, offering a more effective path to relief and cognitive optimization.</li>
+</ul>
+<h4>Navigating Insurance Coverage for FDA-Approved Conditions</h4><br><br><ul><li>  <strong>Accepted Conditions:</strong> fMRI-guided TMS is recognized for its efficacy in treating <strong>FDA-approved conditions, including major depressive disorder (MDD) and Obsessive-Compulsive Disorder (OCD)</strong>. For these specific diagnoses, many major insurance carriers provide coverage.</li>
+<li>  <strong>Verification Support:</strong> Our team at Neurotherapeutix works closely with patients to verify benefits and guide them through the insurance pre-authorization process. We aim to ensure you understand your potential coverage for these medically necessary treatments.</li>
+</ul>
+<strong>Contact us today</strong> to learn more about fMRI-guided TMS and discuss your personalized treatment plan and insurance options.</div></details>
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"utilizing sophisticated neuronavigation systems"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University / NewYork-Presbyterian (Department of Psychiatry) · Mount Sinai Health System (Center for Neuromodulation) · NYU Langone Health (Center for Neuromodulation)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly state that Neurotherapeutix uses 'sophisticated neuronavigation systems' or 'MRI-guided neuronavigation' for highly accurate coil placement.</div>
+  <ul class="gqueries"><li>Who provides fMRI-guided TMS treatment for treatment-resistant depression in NYC?</li></ul>
+  <details class="gen-wrap"><summary>📝 View Generated Content</summary><div class="gen-body"><h3>Neurotherapeutix: Precision fMRI-Guided Transcranial Magnetic Stimulation in NYC, Utilizing Sophisticated Neuronavigation Systems</h3><br><br>For individuals in NYC seeking highly effective treatment for severe or treatment-resistant depression, Neurotherapeutix offers advanced <strong>fMRI-guided transcranial magnetic stimulation (TMS)</strong>. Our approach stands apart by <strong>utilizing sophisticated neuronavigation systems</strong> to achieve unparalleled precision. By integrating functional MRI data directly into our treatment planning, we accurately identify the most effective cortical targets, ensuring each TMS pulse is delivered with optimal therapeutic impact for superior patient outcomes.<br><br><h4>The Neurotherapeutix Advantage: Unmatched Precision</h4><br><br>At Neurotherapeutix, we understand that effective TMS relies on precise targeting. Our commitment to cutting-edge technology ensures your treatment is not just personalized, but pinpoint accurate for maximum efficacy.<br><br><ul><li>  <strong>Individualized Brain Mapping:</strong> We begin with an fMRI scan to map your unique brain activity, identifying the precise neural networks associated with your condition. This allows us to target the most relevant areas for therapeutic stimulation, moving beyond generic protocols.</li>
+<li>  <strong>Sophisticated Neuronavigation:</strong> Our advanced neuronavigation systems integrate your fMRI data with real-time head tracking. This technology guides our TMS coil placement with sub-millimeter accuracy, ensuring that the magnetic pulses consistently reach the exact intended brain region, session after session.</li>
+<li>  <strong>Optimized Outcomes:</strong> This level of precision maximizes the therapeutic effect of each treatment, leading to better and more consistent results for patients struggling with treatment-resistant depression and other neurological conditions.</li>
+</ul>
+Ready to explore if fMRI-guided TMS is right for you? Contact Neurotherapeutix today to schedule a consultation in NYC.</div></details>
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"active research programs and clinical programs"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University / NewYork-Presbyterian (Department of Psychiatry) · Mount Sinai Health System (Center for Neuromodulation) · NYU Langone Health (Center for Neuromodulation)</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 While Neurotherapeutix is not an academic research center, emphasize how its 'data-driven approach' is informed by the latest scientific literature, internal data analysis for continuous improvement, and a commitment to clinical excellence.</div>
+  <ul class="gqueries"><li>Who provides fMRI-guided TMS treatment for treatment-resistant depression in NYC?</li></ul>
+  <details class="gen-wrap"><summary>📝 View Generated Content</summary><div class="gen-body"><h3>Neurotherapeutix: Informed by Active Research & Clinical Programs for fMRI-Guided TMS in NYC</h3><br><br>For those seeking fMRI-guided transcranial magnetic stimulation (TMS) for treatment-resistant depression in NYC, Neurotherapeutix offers a leading-edge solution. While we operate as a dedicated clinical practice rather than an academic research institution, our approach is profoundly informed by the latest <strong>active research programs and clinical programs</strong> globally. We meticulously integrate findings from peer-reviewed literature and utilize a robust data-driven methodology to ensure optimal patient outcomes.<br><br><h4>Our Data-Driven Commitment</h4><br><br><ul><li>  <strong>Leveraging Scientific Advancements:</strong> We continuously monitor breakthroughs from prominent research centers and translate validated findings into our clinical protocols. This ensures our fMRI-guided TMS treatments reflect the most current understanding of brain networks and effective neuromodulation.</li>
+<li>  <strong>Internal Performance Analysis:</strong> Beyond external research, we conduct rigorous internal data analysis of our treatment efficacy. This continuous feedback loop allows us to refine our protocols, personalize care, and consistently strive for superior results for each patient.</li>
+</ul>
+<h4>Clinical Excellence in Practice</h4><br><br><ul><li>  <strong>Precision and Personalization:</strong> Our fMRI-guided TMS identifies individual brain targets with unmatched precision. This personalized approach, informed by the collective scientific understanding of depression circuitry, is fundamental to achieving meaningful and lasting relief.</li>
+<li>  <strong>Outcome-Focused Care:</strong> Every aspect of our treatment is designed with your outcome in mind. From initial assessment to ongoing support, our team is dedicated to providing compassionate, evidence-based care that helps you reclaim your well-being.</li>
+</ul>
+Discover how our data-driven fMRI-guided TMS can make a difference in your life. Contact Neurotherapeutix today for a consultation.</div></details>
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"accepts a wide range of major insurance plans"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University / NewYork-Presbyterian (Department of Psychiatry) · Mount Sinai Health System (Center for Neuromodulation) · NYU Langone Health (Center for Neuromodulation)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 If accurate, rephrase Neurotherapeutix's insurance information to explicitly state 'accepts a wide range of major insurance plans' or 'works with most major insurance providers' to convey broader financial accessibility.</div>
+  <ul class="gqueries"><li>Who provides fMRI-guided TMS treatment for treatment-resistant depression in NYC?</li></ul>
+  <details class="gen-wrap"><summary>📝 View Generated Content</summary><div class="gen-body"><h3>Neurotherapeutix: fMRI-Guided TMS for TRD, Accepting a Wide Range of Major Insurance Plans</h3><br><br>For individuals in NYC seeking advanced treatment for treatment-resistant depression (TRD), Neurotherapeutix provides state-of-the-art fMRI-guided transcranial magnetic stimulation (TMS). We understand the importance of accessible care, which is why Neurotherapeutix <strong>accepts a wide range of major insurance plans</strong>, significantly broadening financial access to this life-changing therapy. Our precision-guided approach leverages functional MRI to personalize treatment, optimizing targeting and enhancing outcomes for patients who have not responded to conventional therapies.<br><br><h4>Why Choose Neurotherapeutix for fMRI-Guided TMS?</h4><br><br><ul><li>  <strong>Precision Treatment:</strong> We utilize individual fMRI data to precisely target the brain regions most relevant to your condition, maximizing therapeutic impact.</li>
+<li>  <strong>Expert Care in NYC:</strong> Our treatments are delivered by a dedicated team of experienced neurologists and psychiatrists specializing in advanced neuromodulation therapies.</li>
+<li>  <strong>Proven Efficacy:</strong> fMRI-guided TMS offers a non-invasive, medication-free option for those struggling with TRD, often with fewer side effects than traditional treatments.</li>
+</ul>
+<h4>Accessibility & Your Insurance</h4><br><br><ul><li>  <strong>Broad Coverage:</strong> Neurotherapeutix proudly works with most major insurance providers to help manage the costs associated with your treatment.</li>
+<li>  <strong>Transparent Process:</strong> Our administrative team is here to assist you with insurance verification and help you understand your benefits and coverage details.</li>
+<li>  <strong>Financial Peace of Mind:</strong> We strive to ensure that financial considerations do not hinder access to the necessary and effective care you deserve.</li>
+</ul>
+Ready to explore fMRI-guided TMS? Contact Neurotherapeutix today to schedule a consultation and verify your insurance benefits.</div></details>
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"involved in ongoing research / at the forefront of TMS treatment delivery and research / clinical excellence"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University Irving Medical Center / NewYork-Presbyterian · Weill Cornell Medicine / NewYork-Presbyterian · Mount Sinai Health System</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Incorporate language that highlights Neurotherapeutix's current active involvement in research, how it stays at the forefront of TMS advancements, or its reputation for clinical excellence, building on its Columbia University research foundation.</div>
+  <ul class="gqueries"><li>What clinics offer fMRI-guided transcranial magnetic stimulation for depression?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"accepts major insurance plans"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Mount Sinai Health System – Center for Neuromodulation · Columbia University Irving Medical Center – Division of Neuromodulation</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Clearly state if Neurotherapeutix accepts any in-network insurance plans. If not, elaborate on the specific value and process of out-of-network assistance, payment plans, or other financial options to address this competitive advantage.</div>
+  <ul class="gqueries"><li>What clinics offer fMRI-guided transcranial magnetic stimulation for post concussion syn…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"part of a major health system"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Mount Sinai Health System – Center for Neuromodulation · Columbia University Irving Medical Center – Division of Neuromodulation</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Highlight the unique advantages of being a specialized, independent clinic, such as focused expertise, highly personalized patient care, and potentially streamlined processes, to differentiate from larger hospital systems.</div>
+  <ul class="gqueries"><li>What clinics offer fMRI-guided transcranial magnetic stimulation for post concussion syn…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"comprehensive neuromodulation program"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Mount Sinai Health System – Center for Neuromodulation · Columbia University Irving Medical Center – Division of Neuromodulation</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Clarify the scope of Neurotherapeutix's services. While specializing in fMRI-guided TMS, it could emphasize the breadth of conditions treated and the depth of its expertise within this specialization, or explicitly state if it offers other neuromodulation techniques.</div>
+  <ul class="gqueries"><li>What clinics offer fMRI-guided transcranial magnetic stimulation for post concussion syn…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#06b6d4"></span>
+    <span class="gkw">"multidisciplinary neuro-rehabilitation plan / integrated care approach"</span>
+    <span class="gtype-b" style="background:#06b6d422;color:#06b6d4;border:1px solid #06b6d444">INTEGRATION</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Mount Sinai Health System · NYU Langone Health</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Clarify how Neurotherapeutix integrates with or recommends other complementary therapies (e.g., physical, occupational, speech therapy) as part of a holistic TBI recovery plan, or if they collaborate with multidisciplinary care teams.</div>
+  <ul class="gqueries"><li>Who provides fMRI-guided TMS for traumatic brain injury recovery in NYC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"academic and research focus / clinical trials"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Mount Sinai Health System · NYU Langone Health</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Highlight any academic affiliations, ongoing research initiatives (even internal data collection for efficacy beyond post-treatment fMRI), or participation in clinical trials related to fMRI-guided TMS for TBI. Mention if their practitioners publish findings or are leaders in the field.</div>
+  <ul class="gqueries"><li>Who provides fMRI-guided TMS for traumatic brain injury recovery in NYC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"wide range of insurance plans / more accessible due to insurance"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Mount Sinai Health System · NYU Langone Health</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 While Neurotherapeutix is out-of-network, they should elaborate on the unique value proposition of their specialized fMRI-guided approach to justify the cost. Provide more detailed information or resources on how they assist patients with out-of-network claims and potential reimbursement beyond just 'superbills' to mitigate the perceived financial barrier and improve accessibility.</div>
+  <ul class="gqueries"><li>Who provides fMRI-guided TMS for traumatic brain injury recovery in NYC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"specific rehabilitation centers or departments (e.g., Concussion Center, Rusk Rehabilitation)"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>NYU Langone Health · Mount Sinai Health System</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Emphasize the benefits of Neurotherapeutix's specialized focus as a dedicated fMRI-guided TMS center, rather than being part of a larger, more general department. If they have formal referral partnerships with leading TBI rehabilitation centers, this could be mentioned to highlight a network of care.</div>
+  <ul class="gqueries"><li>Who provides fMRI-guided TMS for traumatic brain injury recovery in NYC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"evidence-based practices / rooted in academic research and clinical excellence"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>NYU Langone Health · Mount Sinai Health System</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Highlight commitment to 'evidence-based practices,' mentioning any scientific advisors, adherence to clinical guidelines, or the research foundation supporting their personalized precision approach, even if not an academic institution itself.</div>
+  <ul class="gqueries"><li>What are the best clinics for fMRI-guided TMS for post concussion syndrome in New York?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"academic research programs"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>NYU Langone Health – Center for Neuromodulation · Weill Cornell Medicine – Brain Stimulation and Neuromodulation Program</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Emphasize the scientific rigor and evidence-based nature of Neurotherapeutix's protocols. If practitioners have academic affiliations or research publications, highlight those to build trust.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided brain stimulation services in NYC for cognit…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"per-session pricing"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>NYU Langone Health – Center for Neuromodulation · Weill Cornell Medicine – Brain Stimulation and Neuromodulation Program</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Add an estimated per-session cost for Neurotherapeutix to provide a clearer, more direct comparison point for potential clients, even if it's a range.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided brain stimulation services in NYC for cognit…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"non-pharmacological"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Brain Wellness Center (NYC) · NY Neurofeedback</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly highlight fMRI-guided TMS as a 'non-pharmacological' or 'medication-free' approach to cognitive enhancement on key service pages and in comparison sections.</div>
+  <ul class="gqueries"><li>I'm looking for neurofeedback training clinics in Manhattan that specialize in improving…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"individual motor thresholds"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>TMS (Center for Neuromodulation) (NYU Langone Health) · Standard TMS (General TMS Clinics in Brooklyn)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Integrate language that clarifies how Neurotherapeutix determines optimal stimulation intensity, such as 'Each personalized protocol combines fMRI-guided coil placement with precise determination of individual motor thresholds for optimal intensity.'</div>
+  <ul class="gqueries"><li>Where can I find personalized TMS protocol providers in Brooklyn for executive function …</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"neuroscientific research"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>TMS (Center for Neuromodulation) (NYU Langone Health) · TMS (Division of Neuromodulation) (Columbia University Medical Center)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Add statements about Neurotherapeutix's involvement in research, contribution to the field, or close ties to academic advancements in neuromodulation. For example: 'As a leader in fMRI-guided TMS, Neurotherapeutix actively participates in and contributes to neuroscientific research, ensuring our methods are continually aligned with the latest cutting-edge findings in cognitive enhancement.'</div>
+  <ul class="gqueries"><li>Where can I find personalized TMS protocol providers in Brooklyn for executive function …</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"theta burst stimulation (TBS)"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University Irving Medical Center · RIVIA Mind (Formerly Advanced TMS of New York)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly mention if Neurotherapeutix offers Theta Burst Stimulation (TBS) as part of its accelerated protocol options, detailing its benefits.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided TMS therapy in New York City?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#8338ec"></span>
+    <span class="gkw">"specific response and remission rates (e.g., 50-60% response, 30-40% remission)"</span>
+    <span class="gtype-b" style="background:#8338ec22;color:#8338ec;border:1px solid #8338ec44">OUTCOME_CLAIM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University Irving Medical Center / NewYork-Presbyterian · MidCity TMS</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Add specific response and remission rates for fMRI-guided TMS, referencing studies or internal data, to Neurotherapeutix's 'Outcomes' section.</div>
+  <ul class="gqueries"><li>What clinics offer fMRI-guided transcranial magnetic stimulation for depression?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"integration with ongoing research / academic focus"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University Irving Medical Center – Division of Neuromodulation</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Add information detailing any research affiliations, ongoing studies, publications by its staff, or how Neurotherapeutix specifically integrates the latest scientific findings and academic advancements into its clinical practice.</div>
+  <ul class="gqueries"><li>What clinics offer fMRI-guided transcranial magnetic stimulation for post concussion syn…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"sophisticated neuronavigation systems"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>NYU Langone Health</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly mention the use of 'sophisticated neuronavigation systems' or 'real-time neuronavigation' that integrates fMRI data for precise TMS coil placement, reinforcing the advanced technical aspect of their precision.</div>
+  <ul class="gqueries"><li>What are the best clinics for fMRI-guided TMS for post concussion syndrome in New York?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"hospital system affiliation"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Weill Cornell Medicine – Brain Stimulation and Neuromodulation Program</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Highlight other trust signals relevant to a specialized private practice, such as years in practice, specific accreditations, medical board certifications of staff, or prominent patient testimonials/case studies.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided brain stimulation services in NYC for cognit…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"Diffusion Tensor Imaging (DTI)"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>NYU Langone Health – Center for Neuromodulation</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 If Neurotherapeutix utilizes DTI or similar advanced neuroimaging techniques beyond fMRI, add this to their description. If not, consider if it's a valuable addition or if the unique benefits of their fMRI guidance can be further elaborated.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided brain stimulation services in NYC for cognit…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"neurophysiological techniques"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Weill Cornell Medicine – Brain Stimulation and Neuromodulation Program</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 If Neurotherapeutix uses other neurophysiological techniques (e.g., EEG-guided TMS, evoked potentials, neurofeedback) to enhance their fMRI guidance or treatment planning, explicitly state them.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided brain stimulation services in NYC for cognit…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"refined targeting beyond standard anatomical landmarks"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Weill Cornell Medicine – Brain Stimulation and Neuromodulation Program</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly articulate that Neurotherapeutix's fMRI guidance allows for targeting *beyond standard anatomical landmarks* to highlight its superior precision and differentiate it from less advanced methods.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided brain stimulation services in NYC for cognit…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"reduced mental fatigue"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Brain Wellness Center (NYC)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Add 'reduced mental fatigue' to the list of explicit outcomes or benefits on the Neurotherapeutix website, particularly on pages detailing cognitive enhancement programs or FAQs.</div>
+  <ul class="gqueries"><li>I'm looking for neurofeedback training clinics in Manhattan that specialize in improving…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"improved working memory"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>NY Neurofeedback</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Incorporate 'improved working memory' as a specific cognitive benefit targeted by Neurotherapeutix's fMRI-guided TMS, perhaps in a detailed section on executive function enhancement.</div>
+  <ul class="gqueries"><li>I'm looking for neurofeedback training clinics in Manhattan that specialize in improving…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"better emotional regulation"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>NY Neurofeedback</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Consider adding a section or mention how enhanced executive function through Neurotherapeutix's treatment can indirectly contribute to 'better emotional regulation' or improved stress management for executives.</div>
+  <ul class="gqueries"><li>I'm looking for neurofeedback training clinics in Manhattan that specialize in improving…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#8338ec"></span>
+    <span class="gkw">"significant, lasting changes"</span>
+    <span class="gtype-b" style="background:#8338ec22;color:#8338ec;border:1px solid #8338ec44">OUTCOME_CLAIM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>NY Neurofeedback</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Use stronger outcome-oriented language such as 'designed for significant, lasting cognitive improvements' or 'sustained enhancement' on Neurotherapeutix's results or testimonial pages.</div>
+  <ul class="gqueries"><li>I'm looking for neurofeedback training clinics in Manhattan that specialize in improving…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"cognitive clarity"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Active Brain NYC</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Integrate 'cognitive clarity' into Neurotherapeutix's marketing copy as an additional benefit, alongside current phrases like 'sharp focus' and 'mental acuity'.</div>
+  <ul class="gqueries"><li>I'm looking for neurofeedback training clinics in Manhattan that specialize in improving…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"general mental well-being"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Active Brain NYC</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 If appropriate and supported, acknowledge 'enhanced general mental well-being' as a secondary or holistic benefit derived from improved cognitive function and reduced mental strain.</div>
+  <ul class="gqueries"><li>I'm looking for neurofeedback training clinics in Manhattan that specialize in improving…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"cutting-edge research"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>NYU Langone Health / ColumbiaDoctors Psychiatry</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Emphasize that Neurotherapeutix's fMRI-guided TMS protocols are informed by 'cutting-edge research' or 'latest neuroscientific advancements' on its 'About Us' or 'Our Approach' pages to bolster trust.</div>
+  <ul class="gqueries"><li>I'm looking for neurofeedback training clinics in Manhattan that specialize in improving…</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"rTMS and Theta Burst Stimulation protocols"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Standard TMS (General TMS Clinics in Brooklyn)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Clarify the specific types of TMS protocols employed within their bespoke treatments. For example: 'Our bespoke TMS protocols leverage advanced rTMS and Theta Burst Stimulation (TBS) techniques, finely tuned by fMRI to target executive function networks.'</div>
+  <ul class="gqueries"><li>Where can I find personalized TMS protocol providers in Brooklyn for executive function …</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"at the forefront of TMS research and advanced protocols"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University Irving Medical Center</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 If Neurotherapeutix is involved in or contributes to TMS research, or leverages cutting-edge research, explicitly state this to build trust and authority.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided TMS therapy in New York City?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"highly experienced clinicians"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University Irving Medical Center</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly highlight the qualifications, experience, and expertise of Neurotherapeutix's clinical team and staff members.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided TMS therapy in New York City?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"ability to handle complex psychiatric cases"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University Irving Medical Center</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Clarify if Neurotherapeutix handles a broader spectrum of complex psychiatric cases beyond just depression, or elaborate on the specific complexity of depression cases they successfully treat.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided TMS therapy in New York City?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"multiple convenient locations"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>RIVIA Mind (Formerly Advanced TMS of New York)</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 If Neurotherapeutix has additional locations beyond Midtown Manhattan, list them to highlight accessibility and convenience.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided TMS therapy in New York City?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"Deep TMS"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>RIVIA Mind (Formerly Advanced TMS of New York)</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Explain whether Neurotherapeutix's fMRI-guided TMS technology offers similar or superior benefits compared to Deep TMS, or if Deep TMS is an option they provide.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided TMS therapy in New York City?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"obsessive-compulsive disorder (OCD), and other conditions"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>RIVIA Mind (Formerly Advanced TMS of New York)</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 If Neurotherapeutix treats other conditions besides treatment-resistant major depressive disorder, explicitly list them under eligibility or conditions treated.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided TMS therapy in New York City?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"transparency regarding pricing"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>RIVIA Mind (Formerly Advanced TMS of New York)</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Provide more specific pricing information publicly or commit to offering detailed pricing during the initial consultation, emphasizing transparency.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided TMS therapy in New York City?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"robust insurance verification services"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>RIVIA Mind (Formerly Advanced TMS of New York)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Clearly state the level of assistance Neurotherapeutix provides with insurance verification, highlighting it as a comprehensive or 'robust' service if applicable.</div>
+  <ul class="gqueries"><li>What are the best providers for fMRI-guided TMS therapy in New York City?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"advanced structural MRI and functional connectivity analysis"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University / NewYork-Presbyterian (Department of Psychiatry)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Clarify if Neurotherapeutix's proprietary fMRI system integrates advanced structural MRI and functional connectivity analysis to enhance targeting precision.</div>
+  <ul class="gqueries"><li>Who provides fMRI-guided TMS treatment for treatment-resistant depression in NYC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"providing evidence-based care and extensive clinical experience"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Columbia University / NewYork-Presbyterian (Department of Psychiatry)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly state Neurotherapeutix's commitment to 'evidence-based care' and highlight its 'extensive clinical experience' in delivering TMS therapy.</div>
+  <ul class="gqueries"><li>Who provides fMRI-guided TMS treatment for treatment-resistant depression in NYC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#8338ec"></span>
+    <span class="gkw">"outcomes in line with large-scale TMS clinical trials"</span>
+    <span class="gtype-b" style="background:#8338ec22;color:#8338ec;border:1px solid #8338ec44">OUTCOME_CLAIM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Mount Sinai Health System (Center for Neuromodulation)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Add a statement indicating that Neurotherapeutix's 'high remission and response rates are comparable to or exceed those reported in large-scale TMS clinical trials,' if factual.</div>
+  <ul class="gqueries"><li>Who provides fMRI-guided TMS treatment for treatment-resistant depression in NYC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"offer maintenance TMS"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>NYU Langone Health (Center for Neuromodulation)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Clearly state if Neurotherapeutix offers 'maintenance TMS' or similar ongoing treatment options for sustained symptom improvement.</div>
+  <ul class="gqueries"><li>Who provides fMRI-guided TMS treatment for treatment-resistant depression in NYC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"maintenance protocols"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>MidCity TMS</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Add 'maintenance protocols' to Neurotherapeutix's treatment protocol description if offered, to complement 'tapering schedules' and 'accelerated protocols'.</div>
+  <ul class="gqueries"><li>What clinics offer fMRI-guided transcranial magnetic stimulation for depression?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"assist with benefit verification"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>MidCity TMS</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly mention that Neurotherapeutix assists patients with 'benefit verification' as part of their comprehensive insurance navigation support.</div>
+  <ul class="gqueries"><li>What clinics offer fMRI-guided transcranial magnetic stimulation for depression?</li></ul>
+  
+</div></div>
+</section>
+
+<section>
+  <div class="sec-title">Visibility by Persona</div>
+  <table class="tbl">
+    <thead><tr><th>Persona</th><th>Responses</th><th>Avg Visibility</th><th>Mention Rate</th><th>Consideration</th><th>Avg Rank</th></tr></thead>
+    <tbody><tr><td class="td-persona" title="Individual Experiencing Post-Concussion Syndrome. Age 25-50, New York State (suburban, commutes to NYC), income $100K-$200K. Suffered concussion 6 months ago with persistent headaches, memory issues, fatigue. Neurologist suggested advanced treatment options. Seeking proven, evidence-based fMRI-guided TMS for post-concussion syndrome, TBI recovery, and neurorehabilitation NYC.">Individual Experiencing Post-Concussion Syndrome. Age 25-50, New York State (suburban, com…</td><td class="mono">6</td><td><div class="btrack"><div class="bfill" style="width:100%;background:#0ea5e9"></div><span class="bval">50.0</span></div></td><td class="mono">50.0%</td><td class="mono">48.3</td><td class="mono">#1</td></tr>
+<tr><td class="td-persona" title="Executive Seeking Cognitive Enhancement. Age 40-55, Manhattan/Brooklyn, income $250K+. Needs sharp focus and improved cognitive processing speed for high-stakes business negotiations. Productivity has dipped. Seeking fMRI-guided TMS for cognitive enhancement, personalized TMS protocols for executive function, brain optimization NYC. Values scientifically validated solutions.">Executive Seeking Cognitive Enhancement. Age 40-55, Manhattan/Brooklyn, income $250K+. Nee…</td><td class="mono">6</td><td><div class="btrack"><div class="bfill" style="width:100%;background:#22c55e"></div><span class="bval">50.0</span></div></td><td class="mono">50.0%</td><td class="mono">50.0</td><td class="mono">#1</td></tr>
+<tr><td class="td-persona" title="Treatment-Resistant Depression Patient. Age 30-60, NYC metro area, income $150K-$250K, slight female skew. Failed multiple medications and therapy. Psychiatrist recommended TMS. Researching fMRI-guided TMS for depression, advanced TMS treatment NYC, personalized TMS therapy, precision psychiatry. Interested in brain-imaging-guided targeting of depression circuits.">Treatment-Resistant Depression Patient. Age 30-60, NYC metro area, income $150K-$250K, sli…</td><td class="mono">6</td><td><div class="btrack"><div class="bfill" style="width:100%;background:#f59e0b"></div><span class="bval">50.0</span></div></td><td class="mono">50.0%</td><td class="mono">50.0</td><td class="mono">#1</td></tr>
+</tbody>
+  </table>
+</section>
+
+
+
+<section>
+  <div class="sec-title">Per-Query Performance — top 30 by visibility</div>
+  <table class="tbl">
+    <thead><tr><th>Query</th><th>Visibility</th><th>Consideration</th><th>Avg Rank</th><th>Responses</th><th>LLMs</th></tr></thead>
+    <tbody><tr><td class="td-query">What clinics offer fMRI-guided transcranial magnetic stimulation for post concussion syndr…</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">Who provides fMRI-guided TMS for traumatic brain injury recovery in NYC?</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">45.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">What are the best clinics for fMRI-guided TMS for post concussion syndrome in New York?</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">What are the best providers for fMRI-guided brain stimulation services in NYC for cognitiv…</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">I'm looking for neurofeedback training clinics in Manhattan that specialize in improving f…</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">Where can I find personalized TMS protocol providers in Brooklyn for executive function im…</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">What are the best providers for fMRI-guided TMS therapy in New York City?</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">Who provides fMRI-guided TMS treatment for treatment-resistant depression in NYC?</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">What clinics offer fMRI-guided transcranial magnetic stimulation for depression?</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+</tbody>
+  </table>
+</section>
+
+</main>
+<footer>
+  PetalAI Pipeline &nbsp;·&nbsp; Neurotherapeutix / fMRI-guided transcranial magnetic stimulation
+  &nbsp;·&nbsp; 18 responses &nbsp;·&nbsp; 49 gaps &nbsp;·&nbsp;
+  5 generated &nbsp;·&nbsp; 2026-03-10 12:39
+</footer>
+</body></html>

@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PetalAI · Startup Funding BC · Innovate BC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060f1e;--s1:#0b1929;--s2:#0f2030;--bdr:#182d42;--txt:#d4e8f8;--muted:#3f6080;
+      --accent:#2563eb;--teal:#0ea5e9;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--purple:#a855f7}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;font-size:14px;line-height:1.6}
+a{color:var(--teal)}
+header{background:linear-gradient(150deg,#040e1c 0%,#091825 55%,#050f1a 100%);
+       border-bottom:1px solid var(--bdr);padding:1.8rem 2.5rem;
+       display:flex;align-items:flex-start;justify-content:space-between;gap:2rem}
+.htitle{font-size:1.4rem;font-weight:800;letter-spacing:-.025em;line-height:1.2}
+.htitle .prod{color:var(--teal)}.htitle .brd{color:#93c5fd}
+.hmeta{color:var(--muted);font-size:.71rem;font-family:'IBM Plex Mono',monospace;
+       margin-top:.5rem;display:flex;flex-wrap:wrap;gap:.9rem}
+.hdesc{color:#7090a8;font-size:.77rem;margin-top:.55rem;max-width:700px;line-height:1.5}
+.hright{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--muted);flex-shrink:0}
+.badge{display:inline-block;background:linear-gradient(90deg,#1d4ed8,#0369a1);color:#fff;
+       font-size:.59rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em}
+.dbadge{display:inline-block;color:#fff;font-size:.57rem;font-weight:700;padding:3px 9px;
+        border-radius:20px;letter-spacing:.06em;margin-left:.4rem}
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);background:var(--bdr);
+           border-bottom:1px solid var(--bdr);gap:1px}
+.kpi{background:var(--s1);padding:1.3rem 1.6rem}
+.kpi-lbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.3rem}
+.kpi-val{font-size:2.1rem;font-weight:800;font-family:'IBM Plex Mono',monospace;line-height:1}
+.kpi-sub{font-size:.62rem;color:var(--muted);margin-top:.25rem}
+.kv-hi{color:var(--green)}.kv-mid{color:var(--amber)}.kv-lo{color:var(--red)}
+.kpi-strip2{display:grid;grid-template-columns:repeat(3,1fr);background:var(--bdr);
+            border-bottom:1px solid var(--bdr);gap:1px}
+.kpi2{background:var(--s2);padding:.85rem 1.6rem;display:flex;align-items:center;gap:.8rem}
+.kpi2-v{font-size:1.6rem;font-weight:800;font-family:'IBM Plex Mono',monospace;color:var(--teal)}
+.kpi2-l{font-size:.58rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+main{padding:2rem 2.5rem;max-width:1580px;margin:0 auto}
+section{margin-bottom:2.2rem}
+.sec-title{font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);
+           margin-bottom:1rem;font-family:'IBM Plex Mono',monospace;
+           display:flex;align-items:center;gap:.6rem}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.stag{font-size:.52rem;padding:1px 7px;border-radius:3px;white-space:nowrap}
+.stag-blue{background:rgba(14,165,233,.12);color:var(--teal)}
+.stag-red{background:rgba(230,57,70,.12);color:#f87171}
+.stag-purple{background:rgba(168,85,247,.12);color:#c084fc}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:1000px){.grid2{grid-template-columns:1fr}}
+.card{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:1.4rem}
+.card-title{font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);
+            margin-bottom:1rem;font-family:'IBM Plex Mono',monospace}
+.rd-row{display:flex;align-items:center;gap:.7rem;margin-bottom:.55rem}
+.rd-lbl{font-family:'IBM Plex Mono',monospace;font-size:.75rem;font-weight:600;width:70px;flex-shrink:0}
+.rd-track{flex:1;background:var(--s2);border-radius:3px;height:9px;overflow:hidden}
+.rd-bar{height:9px;border-radius:3px}
+.rd-cnt{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);width:36px;text-align:right}
+.tbl{width:100%;border-collapse:collapse;background:var(--s1);border-radius:8px;
+     overflow:hidden;border:1px solid var(--bdr)}
+.tbl th{background:var(--s2);padding:.5rem .9rem;text-align:left;font-size:.56rem;
+        text-transform:uppercase;letter-spacing:.08em;color:var(--muted);border-bottom:1px solid var(--bdr)}
+.tbl td{padding:.62rem .9rem;border-bottom:1px solid var(--bdr);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(37,99,235,.04)}
+.target-row td{background:rgba(14,165,233,.05)!important;border-left:2px solid var(--teal)}
+.target-tag{display:inline-block;background:rgba(14,165,233,.18);color:var(--teal);
+            font-size:.53rem;padding:1px 5px;border-radius:3px;font-family:'IBM Plex Mono',monospace;font-weight:700}
+.mono{font-family:'IBM Plex Mono',monospace;font-size:.74rem;color:var(--muted);text-align:center}
+.fw7{font-weight:700}.muted{color:var(--muted)}
+.td-prod{min-width:150px}.pname{font-weight:700;font-size:.88rem}.pbrand{font-size:.7rem;color:var(--muted)}
+.td-bname{font-size:.88rem;min-width:150px}
+.td-persona{font-size:.75rem;max-width:310px}
+.td-query{font-size:.76rem;max-width:400px}
+.td-llms{font-size:.64rem;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.kws-cell{font-size:.7rem;color:var(--muted);max-width:290px}
+.td-tags{max-width:480px}
+.empty{text-align:center;color:var(--muted);padding:1.5rem;font-size:.79rem}
+.empty-card{background:var(--s1);border:1px dashed var(--bdr);border-radius:8px;
+            text-align:center;color:var(--muted);padding:2rem;font-size:.82rem}
+.btrack{display:flex;align-items:center;background:var(--s2);border-radius:4px;
+        height:19px;position:relative;overflow:hidden;min-width:80px}
+.bfill{height:100%;border-radius:4px;min-width:2px}
+.bval{position:absolute;right:6px;font-family:'IBM Plex Mono',monospace;
+      font-size:.67rem;font-weight:600;color:var(--txt)}
+.bwrap2{display:flex;align-items:center;gap:.5rem;min-width:120px}
+.btrack-inner{flex:1;background:var(--s2);border-radius:2px;height:5px;overflow:hidden}
+.bfill2{height:5px;background:linear-gradient(90deg,var(--accent),var(--teal));border-radius:2px;min-width:2px}
+.bval2{font-family:'IBM Plex Mono',monospace;font-size:.74rem;font-weight:700;color:var(--txt);white-space:nowrap}
+.td-bar2{min-width:130px}
+.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:.69rem;
+      font-weight:600;font-family:'IBM Plex Mono',monospace}
+.qbadge{display:inline-block;padding:2px 6px;border-radius:3px;font-size:.62rem;
+        font-weight:700;font-family:'IBM Plex Mono',monospace}
+.q-p{background:rgba(34,197,94,.15);color:#22c55e}
+.q-m{background:rgba(245,158,11,.15);color:#f59e0b}
+.q-b{background:rgba(100,116,139,.15);color:#94a3b8}
+.q-n{background:rgba(239,68,68,.15);color:#ef4444}
+.kwtag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:.67rem;margin:2px;font-weight:500}
+.gap-kw{background:rgba(230,57,70,.1);color:#f87171;border:1px solid rgba(230,57,70,.25)}
+.shared-kw{background:rgba(34,197,94,.1);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
+.gap-cnt{color:#f87171!important;font-weight:700}
+.legend-row{display:flex;gap:1.5rem;margin-bottom:.8rem;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:.4rem;font-size:.66rem;color:var(--muted)}
+.legend-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.gaps-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:900px){.gaps-grid{grid-template-columns:1fr}}
+.gap-card{background:var(--s1);border:1px solid var(--bdr);border-radius:9px;
+          padding:1.1rem 1.3rem;transition:border-color .2s}
+.gap-card:hover{border-color:var(--accent)}
+.gap-top{display:flex;align-items:center;gap:.45rem;margin-bottom:.4rem;flex-wrap:wrap}
+.gdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.gkw{font-weight:700;font-size:.91rem}
+.gtype-b{display:inline-block;padding:1px 7px;border-radius:3px;font-size:.59rem;
+         font-weight:700;font-family:'IBM Plex Mono',monospace}
+.gfreq{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:var(--muted);white-space:nowrap}
+.gmeta{font-size:.72rem;margin-bottom:.4rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center}
+.gcomps{color:var(--muted)}
+.has-yes{color:var(--green);font-size:.67rem;font-weight:600}
+.has-no{color:var(--red);font-size:.67rem;font-weight:600}
+.gaction{background:var(--s2);border-radius:4px;padding:.32rem .65rem;font-size:.72rem;
+         color:#94a3b8;margin:.38rem 0;line-height:1.5;border-left:2px solid var(--accent)}
+.gqueries{list-style:none;margin:.32rem 0}
+.gqueries li{font-size:.68rem;color:var(--muted);padding:2px 0}
+.gqueries li::before{content:'↳ ';color:var(--accent)}
+details.gen-wrap{margin-top:.7rem;border-top:1px solid var(--bdr);padding-top:.65rem}
+details.gen-wrap summary{cursor:pointer;font-size:.75rem;font-weight:700;color:#c084fc;
+                         list-style:none;display:flex;align-items:center;gap:.35rem}
+details.gen-wrap summary:hover{color:#e9d5ff}
+.gen-body{margin-top:.65rem;padding:1rem;background:var(--bg);border-radius:6px;
+          font-size:.79rem;line-height:1.75;color:#cbd5e1;border-left:3px solid #7c3aed}
+.gen-body h3{font-size:.97rem;font-weight:800;color:var(--txt);margin-bottom:.45rem}
+.gen-body h4{font-size:.83rem;font-weight:700;color:var(--teal);margin:.75rem 0 .22rem}
+.gen-body h5{font-size:.79rem;font-weight:600;color:var(--muted);margin:.5rem 0 .2rem}
+.gen-body ul{margin-left:1rem;margin-top:.25rem}
+.gen-body li{margin-bottom:.22rem}
+.sp-wrap{display:flex;align-items:flex-end;gap:3px;height:72px;padding-bottom:4px}
+.spbar{background:linear-gradient(180deg,var(--teal),var(--accent));border-radius:2px 2px 0 0;flex-shrink:0}
+.spbar:hover{opacity:.7;cursor:pointer}
+.sp-axis{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;
+         font-size:.59rem;color:var(--muted);margin-top:.5rem}
+footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.62rem;
+       font-family:'IBM Plex Mono',monospace;border-top:1px solid var(--bdr);margin-top:2rem}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="htitle"><span class="prod">Startup Funding BC</span> <span style="color:var(--muted)">·</span> <span class="brd">Innovate BC</span></div>
+    <div class="hmeta">
+      <span>📍 British Columbia, Canada</span>
+      <span>🔗 <a href="https://www.innovatebc.ca" target="_blank">https://www.innovatebc.ca</a></span>
+      <span>📊 18 scored responses</span>
+      <span>🕒 2026-03-10 13:09</span>
+    </div>
+    <div class="hdesc">Innovate BC's New Ventures BC Competition is British Columbia's flagship startup competition. It offers early-stage tech and impact founders mentorship, investor access, and up to $130,000 in prizes and in-kind services. Supports founders across the BC tech ecosystem to validate their business, fundraise, and scale within Canadian and international markets.</div>
+  </div>
+  <div class="hright">
+    <div style="margin-bottom:.4rem">
+      <span class="badge">PetalAI</span>
+      <span class="dbadge" style="background:linear-gradient(90deg,#7c3aed,#4f46e5)">LLM Diagnosis ✓</span>
+    </div>
+    <div>AEO / GEO Product Intelligence</div>
+    <div style="margin-top:.25rem">petalai_pipeline.py</div>
+  </div>
+</header>
+
+<div class="kpi-strip">
+  <div class="kpi"><div class="kpi-lbl">Mention Rate</div>
+    <div class="kpi-val kv-mid">50.0%</div>
+    <div class="kpi-sub">responses with visibility &gt; 0</div></div>
+  <div class="kpi"><div class="kpi-lbl">Avg Visibility</div>
+    <div class="kpi-val kv-mid">46.7</div>
+    <div class="kpi-sub">0–100 · median 30.0</div></div>
+  <div class="kpi"><div class="kpi-lbl">Avg Consideration</div>
+    <div class="kpi-val kv-mid">47.8</div>
+    <div class="kpi-sub">0–100 scale</div></div>
+  <div class="kpi"><div class="kpi-lbl">Avg AI Rank</div>
+    <div class="kpi-val kv-hi">#1.2</div>
+    <div class="kpi-sub">best #1 · lower = better</div></div>
+  <div class="kpi"><div class="kpi-lbl">Total Responses</div>
+    <div class="kpi-val kv-mid">18</div>
+    <div class="kpi-sub">across all queries &amp; LLMs</div></div>
+</div>
+
+<div class="kpi-strip2">
+  <div class="kpi2">
+    <div class="kpi2-v">64</div>
+    <div class="kpi2-l">Competitor Products<br>Detected by LLMs</div>
+  </div>
+  <div class="kpi2">
+    <div class="kpi2-v" style="color:#f87171">69</div>
+    <div class="kpi2-l">Visibility &amp; Content<br>Gaps Identified</div>
+  </div>
+  <div class="kpi2">
+    <div class="kpi2-v" style="color:#c084fc">5</div>
+    <div class="kpi2-l">Gap-Filling Pieces<br>Generated</div>
+  </div>
+</div>
+
+<main>
+
+<div class="grid2">
+  <div class="card">
+    <div class="card-title">AI Ranking Position Distribution</div>
+    <div class="rd-row"><span class="rd-lbl">#1</span><div class="rd-track"><div class="rd-bar" style="width:77%;background:#22c55e"></div></div><span class="rd-cnt">7</span></div><div class="rd-row"><span class="rd-lbl">#2</span><div class="rd-track"><div class="rd-bar" style="width:22%;background:#4ade80"></div></div><span class="rd-cnt">2</span></div><div class="rd-row"><span class="rd-lbl">#3</span><div class="rd-track"><div class="rd-bar" style="width:0%;background:#f59e0b"></div></div><span class="rd-cnt">0</span></div><div class="rd-row"><span class="rd-lbl">#4-5</span><div class="rd-track"><div class="rd-bar" style="width:0%;background:#fb923c"></div></div><span class="rd-cnt">0</span></div><div class="rd-row"><span class="rd-lbl">6+</span><div class="rd-track"><div class="rd-bar" style="width:0%;background:#ef4444"></div></div><span class="rd-cnt">0</span></div><div class="rd-row"><span class="rd-lbl">Not ranked</span><div class="rd-track"><div class="rd-bar" style="width:100%;background:#374151"></div></div><span class="rd-cnt">9</span></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Performance by LLM Provider</div>
+    <table class="tbl">
+      <thead><tr><th>Model</th><th>Responses</th><th>Avg Visibility</th><th>Mention Rate</th><th>Consideration</th><th>Avg Rank</th></tr></thead>
+      <tbody><tr><td><span class="pill" style="background:#3b82f622;color:#3b82f6;border:1px solid #3b82f655">gemini</span></td><td class="mono">9</td><td><div class="btrack"><div class="bfill" style="width:100%;background:#3b82f6"></div><span class="bval">93.3</span></div></td><td class="mono">100.0%</td><td class="mono">95.6</td><td class="mono">#1.2</td></tr>
+<tr><td><span class="pill" style="background:#0ea5e922;color:#0ea5e9;border:1px solid #0ea5e955">openai</span></td><td class="mono">9</td><td><div class="btrack"><div class="bfill" style="width:0%;background:#0ea5e9"></div><span class="bval">0.0</span></div></td><td class="mono">0.0%</td><td class="mono">0.0</td><td class="mono">—</td></tr>
+</tbody>
+    </table>
+  </div>
+</div>
+
+<section>
+  <div class="sec-title">Competitor Products Ranked in LLM Responses
+    <span class="stag stag-blue">LLM EXTRACTED FROM RESPONSE TEXT</span></div>
+  <table class="tbl">
+    <thead><tr><th>#</th><th>Product</th><th>Mention Rate</th><th>Responses</th><th>Avg Rank</th><th>Quality</th><th>Feature Keywords LLMs Associate With This Product</th></tr></thead>
+    <tbody><tr class="target-row"><td class="mono muted">#1</td><td class="td-prod"><div class="pname">BC Venture Acceleration Program (BCVAP)&nbsp;<span class='target-tag'>TARGET</span></div><div class="pbrand">Innovate BC</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">22.2%</span></div></td><td class="mono">2</td><td class="mono">#1.5</td><td><span class="qbadge q-p">2&thinsp;P</span></td><td class="kws-cell">flagship early-stage program · intensive, structured one-on-one mentorship · workshops · peer group sessions · validate business models · prepare for investment</td></tr>
+<tr class=""><td class="mono muted">#2</td><td class="td-prod"><div class="pname">New Ventures BC (NVBC) Competition</div><div class="pbrand">New Ventures BC</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">22.2%</span></div></td><td class="mono">2</td><td class="mono">#2.5</td><td><span class="qbadge q-p">2&thinsp;P</span></td><td class="kws-cell">British Columbia's largest and longest-running competition for early-stage tech startups · offering significant prizes and comprehensive mentorship · Over $250,000 in cash prizes · $110,000 top prize · in-kind services · 7-month competition</td></tr>
+<tr class="target-row"><td class="mono muted">#3</td><td class="td-prod"><div class="pname">Ignite Program&nbsp;<span class='target-tag'>TARGET</span></div><div class="pbrand">Innovate BC</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">22.2%</span></div></td><td class="mono">2</td><td class="mono">#2.5</td><td><span class="qbadge q-p">2&thinsp;P</span></td><td class="kws-cell">Offers grants from $100,000 to $300,000 · research and development projects that address a significant BC industry problem · encouraging collaborations between academia and industry · up to $750,000 for R&D projects with commercial potential · often requiring collaboration with research institutions · Eligibility typically requires a strong technological innovation component and B.C. residency</td></tr>
+<tr class=""><td class="mono muted">#4</td><td class="td-prod"><div class="pname">Startup Program</div><div class="pbrand">Futurpreneur Canada</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">22.2%</span></div></td><td class="mono">2</td><td class="mono">#4.5</td><td><span class="qbadge q-p">2&thinsp;P</span></td><td class="kws-cell">Founders aged 18-39 with a viable business idea or an operating business for less than 12 months · Canada-wide · Offers up to $60,000 in collateral-free financing · up to $20,000 directly from Futurpreneur · matched with up to $40,000 from the Business Development Bank of Canada - BDC · coupled with a dedicated mentor for up to two years</td></tr>
+<tr class=""><td class="mono muted">#5</td><td class="td-prod"><div class="pname">Alacrity Canada</div><div class="pbrand">Alacrity Canada</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">22.2%</span></div></td><td class="mono">2</td><td class="mono">#6</td><td><span class="qbadge q-p">2&thinsp;P</span></td><td class="kws-cell">Venture building in specific deep tech sectors · cybersecurity, enterprise software, and IoT · creates companies around market opportunities · Provides seed funding · mentorship, and strategic guidance · build companies from conception or early stages</td></tr>
+<tr class=""><td class="mono muted">#6</td><td class="td-prod"><div class="pname">Foresight Canada</div><div class="pbrand">Foresight Canada</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:100%"></div></div><span class="bval2">22.2%</span></div></td><td class="mono">2</td><td class="mono">#6</td><td><span class="qbadge q-p">2&thinsp;P</span></td><td class="kws-cell">Cleantech, agritech, watertech · ventures addressing environmental and sustainability challenges · various programs (Launchpad, Growth, Export) · mentorship, workshops, and connections to funding opportunities and strategic partners · Startups with a demonstrable cleantech solution · Market validation</td></tr>
+<tr class=""><td class="mono muted">#7</td><td class="td-prod"><div class="pname">New Ventures BC Competition</div><div class="pbrand">New Ventures BC</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:50%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#1</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">British Columbia's premier annual startup competitions · extensive 1-on-1 mentorship · workshops covering business planning, financial modeling, intellectual property, marketing, and investor pitching · Over $250,000 in cash and prizes is awarded annually · $100,000 grand prize · second prize of $60,000</td></tr>
+<tr class=""><td class="mono muted">#8</td><td class="td-prod"><div class="pname">BC Social Innovation & Climate Action Partner Fund</div><div class="pbrand">Rally Assets</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:50%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#1</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">Grants, loans, and equity investments · BC-based social enterprises, non-profits, and charities working on solutions to social and environmental challenges · particularly those aligned with poverty reduction, climate action, and reconciliation · Prioritizes projects demonstrating measurable impact · aims to leverage capital for significant impact · Focuses on systems-level change</td></tr>
+<tr class=""><td class="mono muted">#9</td><td class="td-prod"><div class="pname">OKGN Angel Summit</div><div class="pbrand">Accelerate Okanagan</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:50%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">highly impactful program · investment prize from a syndicate of angel investors · winning company receives an investment prize of over $140,000 · multi-stage competition involves a series of workshops and pitch events over several months (typically January to March) · Participants gain access to investor readiness training and direct feedback from angels · BC-based, scalable ventures with an MVP (Minimum Viable Product) that are typically seeking seed to Series A funding (often in the $250K - $2M range)</td></tr>
+<tr class="target-row"><td class="mono muted">#10</td><td class="td-prod"><div class="pname">Innovate BC Ignite Program&nbsp;<span class='target-tag'>TARGET</span></div><div class="pbrand">Innovate BC</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:50%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">funding for collaborative research and development (R&D) projects · up to $750,000 per project · requires a partnership between a BC-based industry partner (startup) and a BC post-secondary institution · focus is on commercialization potential · accelerate the commercialization of new technologies and create high-paying jobs</td></tr>
+<tr class=""><td class="mono muted">#11</td><td class="td-prod"><div class="pname">SheBoot</div><div class="pbrand">Invest Ottawa and Capital Angels</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:50%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">specifically designed to support women founders across Canada in securing capital · intensive 6-week program focusing on investor readiness, due diligence, valuation, and pitching · 1-on-1 mentorship · workshops led by investors and experienced entrepreneurs · up to $100,000 in investment (typically minimum $50,000) from the SheBoot Fund · Canadian woman-led incorporated technology startup with a scalable solution and clear market opportunity</td></tr>
+<tr class="target-row"><td class="mono muted">#12</td><td class="td-prod"><div class="pname">Venture Acceleration Program (VAP)&nbsp;<span class='target-tag'>TARGET</span></div><div class="pbrand">Innovate BC</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:50%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#2</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">delivered through a network of regional partners known as the BC Acceleration Network · flagship program for early-stage tech companies · intensive mentorship and strategic guidance · delivered by experienced Executives-in-Residence (EiRs) · broad geographic access · Intensive Mentorship</td></tr>
+<tr class=""><td class="mono muted">#13</td><td class="td-prod"><div class="pname">SFU Coast Capital Savings Venture Prize</div><div class="pbrand">Simon Fraser University (SFU)</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:50%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#3</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">Up to $40,000 in cash prizes is awarded across various categories · grand prize for the top venture, as well as awards for social impact, emerging innovators · Participants engage in workshops, receive mentorship from SFU's entrepreneurship ecosystem · Primarily open to current SFU students, faculty, staff, and recent alumni · excellent option for founders with an SFU affiliation</td></tr>
+<tr class="target-row"><td class="mono muted">#14</td><td class="td-prod"><div class="pname">Innovator Skills Initiative (ISI)&nbsp;<span class='target-tag'>TARGET</span></div><div class="pbrand">Innovate BC</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:50%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#3</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">Wage subsidies · BC tech companies hiring students or recent graduates · Up to $10,000 per placement · Supports talent acquisition for startups · provides valuable work experience for students</td></tr>
+<tr class="target-row"><td class="mono muted">#15</td><td class="td-prod"><div class="pname">BC Acceleration Network (BCAN)&nbsp;<span class='target-tag'>TARGET</span></div><div class="pbrand">Innovate BC</div></td><td class="td-bar2"><div class="bwrap2"><div class="btrack-inner"><div class="bfill2" style="width:50%"></div></div><span class="bval2">11.1%</span></div></td><td class="mono">1</td><td class="mono">#3</td><td><span class="qbadge q-p">1&thinsp;P</span></td><td class="kws-cell">network of regional accelerators and incubators · provide crucial mentorship, workshops, and connections · business coaching · investor readiness training · pitch events · ecosystem navigation</td></tr>
+</tbody>
+  </table>
+</section>
+
+<section>
+  <div class="sec-title">Keywords &amp; Phrases LLMs Associate With Competitors — Gaps for Innovate BC
+    <span class="stag stag-red">COMPETITOR KEYWORD GAP ANALYSIS</span></div>
+  <div class="legend-row">
+    <div class="legend-item"><div class="legend-dot" style="background:#f87171"></div>Red = keywords target brand LACKS in LLM responses</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4ade80"></div>Green = keywords also attributed to target brand</div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>Competitor Brand</th><th>Keywords &amp; Phrases LLMs Use to Describe Them</th><th>Gap Keywords<br>(target lacks)</th><th>Shared</th></tr></thead>
+    <tbody><tr><td class="td-bname"><strong>New Ventures BC</strong></td><td class="td-tags"><span class="kwtag gap-kw">investor introductions</span><span class="kwtag gap-kw">$110,000 top prize</span><span class="kwtag gap-kw">B.C.-based, privately-held company less than seven years old</span><span class="kwtag gap-kw">British Columbia's premier annual startup competitions</span><span class="kwtag gap-kw">Structured Education</span><span class="kwtag gap-kw">offering significant prizes and comprehensive mentorship</span><span class="kwtag gap-kw">multiple pitching rounds</span></td><td class="mono gap-cnt">46</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Futurpreneur Canada</strong></td><td class="td-tags"><span class="kwtag gap-kw">Provides financing, mentoring, and support for aspiring business owners aged 18-39, including social enterprises</span><span class="kwtag gap-kw">viable business plan</span><span class="kwtag gap-kw">Canadian citizens or permanent residents aged 18-39</span><span class="kwtag gap-kw">Offers up to $60,000 in collateral-free financing</span><span class="kwtag gap-kw">Canadian entrepreneurs aged 18-39</span><span class="kwtag gap-kw">up to $20,000 directly from Futurpreneur</span><span class="kwtag gap-kw">Up to $60,000 (up to $20,000 from Futurpreneur, matched by a financial partner like BDC or Vancity)</span></td><td class="mono gap-cnt">32</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Launch Academy</strong></td><td class="td-tags"><span class="kwtag gap-kw">regular workshops on key startup topics (e.g., product-market fit, fundraising, growth hacking)</span><span class="kwtag gap-kw">Tech startups with some initial traction or a well-developed concept, ready to accelerate</span><span class="kwtag gap-kw">Global Reach</span><span class="kwtag gap-kw">access to a network of mentors</span><span class="kwtag gap-kw">fostering peer learning and networking</span><span class="kwtag gap-kw">Cost: Membership fees (e.g., $150-$500/month for co-working and core programming)</span><span class="kwtag gap-kw">community-driven environment for tech startups</span></td><td class="mono gap-cnt">26</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>entrepreneurship@UBC (e@UBC)</strong></td><td class="td-tags"><span class="kwtag gap-kw">modest fee (e.g., $500-$1,000) for community founders for programs like CORE+</span><span class="kwtag gap-kw">leveraging university resources and a strong mentorship network</span><span class="kwtag gap-kw">structured workshops on business model canvas, value proposition design, customer discovery, market validation, and financial basics</span><span class="kwtag gap-kw">Pitching Opportunities</span><span class="kwtag gap-kw">Access to a diverse pool of mentors, including seasoned entrepreneurs, industry specialists, and investors</span><span class="kwtag gap-kw">suite of programs designed to guide entrepreneurs from idea to market</span><span class="kwtag gap-kw">Early-stage founders with an innovative idea or nascent venture</span></td><td class="mono gap-cnt">19</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Spring Activator</strong></td><td class="td-tags"><span class="kwtag gap-kw">leveraging technology</span><span class="kwtag gap-kw">startups are coached and then pitch to a syndicate of investors who commit to investing</span><span class="kwtag gap-kw">Spring does not take equity directly</span><span class="kwtag gap-kw">Impact-driven ventures ready to scale</span><span class="kwtag gap-kw">equity investments ranging from $50,000 to $500,000+</span><span class="kwtag gap-kw">Cohort-based learning, mentorship, pitch opportunities</span><span class="kwtag gap-kw">Connects ventures with angel investors</span></td><td class="mono gap-cnt">18</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Alacrity Canada</strong></td><td class="td-tags"><span class="kwtag gap-kw">Provides seed funding</span><span class="kwtag gap-kw">creates companies around market opportunities</span><span class="kwtag gap-kw">Victoria, BC</span><span class="kwtag gap-kw">operational guidance, market validation, and sales acceleration support</span><span class="kwtag gap-kw">opportunities to spin out companies from existing IP</span><span class="kwtag gap-kw">CAD $100,000 - $250,000 seed investment in exchange for equity</span><span class="kwtag gap-kw">hands-on venture building support</span></td><td class="mono gap-cnt">17</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>MaRS Discovery District</strong></td><td class="td-tags"><span class="kwtag gap-kw">Canadian innovation hub</span><span class="kwtag gap-kw">Supports Canadian startups across various sectors, including Health, FinTech, Enterprise, and Cleantech, from early-stage to scale-up</span><span class="kwtag gap-kw">connections to corporate partners, investors, and talent</span><span class="kwtag gap-kw">Many advisory services and resources are free for eligible ventures</span><span class="kwtag gap-kw">health sciences commercialization</span><span class="kwtag gap-kw">Toronto-based, but its network and resources benefit startups nationally</span><span class="kwtag gap-kw">Companies gain strategic insights, access to market opportunities, and introductions to funding sources, helping them navigate complex growth challenges</span></td><td class="mono gap-cnt">16</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Foresight Canada</strong></td><td class="td-tags"><span class="kwtag gap-kw">various programs (Launchpad, Growth, Export)</span><span class="kwtag gap-kw">ventures addressing environmental and sustainability challenges</span><span class="kwtag gap-kw">Startups with a demonstrable cleantech solution</span><span class="kwtag gap-kw">Market validation</span><span class="kwtag gap-kw">Specializes in cleantech startups</span><span class="kwtag gap-kw">Accelerating the commercialization of clean technology</span><span class="kwtag gap-kw">mentorship, workshops, and connections to funding opportunities and strategic partners</span><span class="kwtag shared-kw">investor readiness</span></td><td class="mono gap-cnt">13</td><td class="mono">1</td></tr>
+<tr><td class="td-bname"><strong>Techstars / Telus</strong></td><td class="td-tags"><span class="kwtag gap-kw">scalable business model</span><span class="kwtag gap-kw">significant follow-on funding rates</span><span class="kwtag gap-kw">direct access to investors</span><span class="kwtag gap-kw">Global early-stage tech companies</span><span class="kwtag gap-kw">Cohort-based, typically once a year</span><span class="kwtag gap-kw">13-week intensive, mentor-driven accelerator program</span><span class="kwtag gap-kw">minimum viable product (MVP)</span></td><td class="mono gap-cnt">14</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>UBC</strong></td><td class="td-tags"><span class="kwtag gap-kw">intensive coaching, workshops, and investor introductions</span><span class="kwtag gap-kw">strong intellectual property</span><span class="kwtag gap-kw">strategic growth planning</span><span class="kwtag gap-kw">demonstrated market potential</span><span class="kwtag gap-kw">Vancouver (UBC campus)</span><span class="kwtag gap-kw">post-seed to pre-Series A</span><span class="kwtag gap-kw">Investment readiness</span><span class="kwtag shared-kw">No equity taken</span></td><td class="mono gap-cnt">13</td><td class="mono">1</td></tr>
+<tr><td class="td-bname"><strong>Creative Destruction Lab</strong></td><td class="td-tags"><span class="kwtag gap-kw">No direct investment from CDL, but facilitates seed-stage financing through mentor investors</span><span class="kwtag gap-kw">Early-stage companies with a defensible technology or scientific breakthrough</span><span class="kwtag gap-kw">machine learning startups</span><span class="kwtag gap-kw">scalable deep tech</span><span class="kwtag gap-kw">science-based ventures</span><span class="kwtag gap-kw">Objective-setting mentorship over 9 months</span><span class="kwtag gap-kw">focuses on massively scalable, science-based ventures</span></td><td class="mono gap-cnt">14</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>DMZ (Toronto Metropolitan University)</strong></td><td class="td-tags"><span class="kwtag gap-kw">benefit from co-working space and a vibrant community</span><span class="kwtag gap-kw">expert workshops on product development, sales, marketing, and fundraising</span><span class="kwtag gap-kw">Startups with a clear value proposition, a minimum viable product (MVP) or prototype, and a committed founding team</span><span class="kwtag gap-kw">direct access to dedicated coaches</span><span class="kwtag gap-kw">connections to investors and industry partners</span><span class="kwtag gap-kw">Founders accelerate product development, validate their business model, build a strong network, and significantly improve their chances of securing follow-on investment</span><span class="kwtag gap-kw">Primarily Toronto-based, but offers virtual components and has a global network</span></td><td class="mono gap-cnt">12</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>University of Toronto's Rotman School of Management</strong></td><td class="td-tags"><span class="kwtag gap-kw">9-month period</span><span class="kwtag gap-kw">invaluable mentorship</span><span class="kwtag gap-kw">facilitates access to capital for massively scalable ventures</span><span class="kwtag gap-kw">facilitate seed-stage financing</span><span class="kwtag gap-kw">raised over $2.5 billion in equity from investors</span><span class="kwtag gap-kw">highly competitive, objectives-based program</span><span class="kwtag gap-kw">early-stage, science-based, or technology-based ventures with potential for massive scale</span></td><td class="mono gap-cnt">12</td><td class="mono">0</td></tr>
+<tr><td class="td-bname"><strong>Community Futures BC</strong></td><td class="td-tags"><span class="kwtag gap-kw">help entrepreneurs develop business plans, marketing strategies, and operational expertise</span><span class="kwtag gap-kw">Offers business loans typically up to $150,000</span><span class="kwtag gap-kw">local business financing</span><span class="kwtag gap-kw">for new or expanding businesses, including social enterprises</span><span class="kwtag gap-kw">Provides free business advice, coaching, training, and resources</span><span class="kwtag gap-kw">regional development funding</span><span class="kwtag gap-kw">business support rural BC</span></td><td class="mono gap-cnt">11</td><td class="mono">0</td></tr>
+</tbody>
+  </table>
+</section>
+
+<section>
+  <div class="sec-title">Competitor Visibility Rankings — Comparison Snapshots
+    <span class="stag stag-blue">COMPARISONS.JSON</span></div>
+  <table class="tbl">
+    <thead><tr><th>#</th><th>Brand</th><th>Mention Rate</th><th>Consideration</th><th>Avg Rank</th><th>Feature Keywords</th></tr></thead>
+    <tbody><tr class="target-row"><td class="mono muted">#1</td><td class="td-bname"><strong>Innovate BC&nbsp;<span class='target-tag'>TARGET</span></strong></td><td><div class="btrack"><div class="bfill" style="width:100%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">95.0</span></div></td><td class="mono">90.0%</td><td class="mono">#1.5</td><td class="kws-cell">BC provincial government funding · innovation grants · accelerator programs BC · venture capital matching · commercialization support</td></tr>
+<tr class=""><td class="mono muted">#2</td><td class="td-bname"><strong>BDC</strong></td><td><div class="btrack"><div class="bfill" style="width:94%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">90.0</span></div></td><td class="mono">85.0%</td><td class="mono">#2.0</td><td class="kws-cell">federal small business loans · startup venture capital · growth equity financing · technology financing · subordinated debt</td></tr>
+<tr class=""><td class="mono muted">#3</td><td class="td-bname"><strong>NRC IRAP</strong></td><td><div class="btrack"><div class="bfill" style="width:89%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">85.0</span></div></td><td class="mono">80.0%</td><td class="mono">#3.0</td><td class="kws-cell">non-dilutive R&D funding · technology innovation grants · SME research funding · technical advisory services · innovation assistance program</td></tr>
+<tr class=""><td class="mono muted">#4</td><td class="td-bname"><strong>Futurpreneur Canada</strong></td><td><div class="btrack"><div class="bfill" style="width:84%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">80.0</span></div></td><td class="mono">85.0%</td><td class="mono">#2.5</td><td class="kws-cell">youth entrepreneur loans · mentorship for young entrepreneurs · start-up financing for under 39 · business plan support · flexible repayment terms</td></tr>
+<tr class=""><td class="mono muted">#5</td><td class="td-bname"><strong>Launch Academy</strong></td><td><div class="btrack"><div class="bfill" style="width:73%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">70.0</span></div></td><td class="mono">70.0%</td><td class="mono">#4.0</td><td class="kws-cell">Vancouver tech incubator · startup accelerator programs · early-stage funding connections · mentorship network · pitch events</td></tr>
+<tr class=""><td class="mono muted">#6</td><td class="td-bname"><strong>Creative Destruction Lab</strong></td><td><div class="btrack"><div class="bfill" style="width:68%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">65.0</span></div></td><td class="mono">90.0%</td><td class="mono">#3.8</td><td class="kws-cell">science-based ventures · scalable deep tech · seed-stage funding · mentor-driven program · UBC program</td></tr>
+<tr class=""><td class="mono muted">#7</td><td class="td-bname"><strong>Community Futures BC</strong></td><td><div class="btrack"><div class="bfill" style="width:42%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">40.0</span></div></td><td class="mono">60.0%</td><td class="mono">#6.5</td><td class="kws-cell">rural small business loans · community economic development · business support rural BC · regional development funding · entrepreneurship programs rural</td></tr>
+<tr class=""><td class="mono muted">#8</td><td class="td-bname"><strong>MaRS Discovery District</strong></td><td><div class="btrack"><div class="bfill" style="width:21%;background:linear-gradient(90deg,#2563eb,#0ea5e9)"></div><span class="bval">20.0</span></div></td><td class="mono">50.0%</td><td class="mono">#8.0</td><td class="kws-cell">Canadian innovation hub · tech entrepreneurship network · health sciences commercialization · social innovation programs · Toronto-based accelerator</td></tr>
+</tbody>
+  </table>
+</section>
+
+<section>
+  <div class="sec-title">
+    Product Visibility Gaps — Features &amp; Phrases Competitors Get Credit For That Innovate BC Lacks
+    <span class="stag stag-red">VISIBILITY GAPS</span>
+    <span class="stag stag-purple">AI-GENERATED CONTENT ↓</span>
+  </div>
+  <div class="gaps-grid">
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"specific funding amounts/ranges (e.g., $1,000 - $ several million)"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Ignite Program (Innovate BC) · BC Fast Pilot Program (Innovate BC) · Financing, Mentoring & Support Programs (Futurpreneur Canada) · Indigenous Entrepreneur Startup Program (Futurpreneur Canada)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly state the typical funding ranges and various capital types (e.g., grants, loans, equity) accessible through Innovate BC's connections and programs, including its own.</div>
+  <ul class="gqueries"><li>What funding opportunities exist for social impact startups in Canada?</li></ul>
+  <details class="gen-wrap"><summary>📝 View Generated Content</summary><div class="gen-body"><h3>Secure Diverse Funding Amounts for Your Social Impact Startup</h3><br><br>Innovate BC is dedicated to empowering innovative startups, including those with a strong social impact mission across British Columbia. For social impact startups in Canada seeking crucial capital, we offer access to a spectrum of <strong>funding amounts</strong> and capital types, supporting your journey from ideation to scale. We connect you to resources and provide direct funding to propel your impact forward.<br><br><h4>Explore Funding Types and Typical Ranges</h4><br><br>Navigating the funding landscape for social impact can be complex. Innovate BC simplifies this by offering and connecting you to various capital structures with clear ranges:<br><br><ul><li>  <strong>Grants:</strong> Our own programs, such as the Ignite Program and BC Fast Pilot, offer non-dilutive capital, typically ranging from <strong>$10,000 to $200,000</strong>. These are ideal for early-stage development, pilot projects, and technology validation, reducing financial risk as you prove your impact model.</li>
+<li>  <strong>Loans:</strong> Through our extensive network of partners, social impact ventures can access various loan structures. These range from micro-loans starting at <strong>$1,000</strong> for bootstrapping, up to substantial growth capital potentially reaching <strong>$500,000 to $1 million+</strong>, often with favourable terms tailored for impact-driven organizations.</li>
+<li>  <strong>Equity Investment:</strong> For high-growth potential social impact ventures, we facilitate connections to angel investors and venture capital firms specializing in impact. Investments typically start from <strong>$50,000 for seed rounds to several million dollars</strong> for more mature ventures seeking scale capital.</li>
+</ul>
+<h4>Your Social Impact Journey Starts Here</h4><br><br>Innovate BC specifically champions ventures addressing pressing societal challenges across various sectors. Our support extends beyond capital, providing mentorship, strategic advice, and resources crucial for scaling your impact and achieving long-term sustainability.<br><br>Explore our programs and partner network to find the right funding opportunity for your social impact startup. Visit innovatebc.ca/funding to learn more and apply.</div></details>
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"direct business loans, equity investments, hybrid financing, or small-scale seed funding"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Impact Investing (Vancity Credit Union / Vancity Community Investment Bank (VCIB)) · Community Investment Programs (Vancity Credit Union / Vancity Community Investment Bank (VCIB)) · Small Business Loans (Community Futures BC) · Business Loans (Women's Enterprise Centre (WEC))</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Consider if Innovate BC should offer these direct funding types or develop a more explicit pathway/guide on the Startup Funding BC portal for accessing these diverse capital options from other providers.</div>
+  <ul class="gqueries"><li>What organizations support community innovation startups in BC?</li></ul>
+  <details class="gen-wrap"><summary>📝 View Generated Content</summary><div class="gen-body"><h3>Unlocking Diverse Capital: <strong>Direct Business Loans, Equity Investments, Hybrid Financing, or Small-Scale Seed Funding</strong> for BC Community Innovation Startups</h3><br><br>Innovate BC is dedicated to accelerating innovation across British Columbia, providing crucial support and resources to help startups thrive. While our core offerings focus on grants, mentorship, and accelerator programs, we recognize the vital role of diverse capital types—including <strong>direct business loans, equity investments, hybrid financing, or small-scale seed funding</strong>—in scaling community innovation. For founders seeking these specific financial instruments, a robust network of specialized organizations across BC stands ready to assist.<br><br><h4>Where to Find Specialized Funding</h4><br><br>Community innovation startups often require tailored financial solutions that align with their mission and growth stage. Here are key categories of providers specializing in the capital types you're seeking:<br><br><ul><li>  <strong>Impact Investors & Social Finance Organizations:</strong> These groups provide capital—often equity or debt—to ventures with a clear social or environmental mission, seeking measurable impact alongside financial returns.</li>
+<li>  <strong>Community-Focused Lenders & Credit Unions:</strong> Offering flexible business loans and sometimes specialized programs designed for local economic development, small businesses, and underrepresented entrepreneurs.</li>
+<li>  <strong>Early-Stage Venture Capital & Angel Networks:</strong> For innovative startups requiring seed funding or equity investments to accelerate product development, market entry, and scaling.</li>
+<li>  <strong>Government & Non-Profit Development Programs:</strong> Various provincial and federal initiatives, alongside private foundations, offer targeted funding, sometimes in the form of non-dilutive grants or low-interest loans, for specific sectors or community benefits.</li>
+</ul>
+Innovate BC is your strategic partner for navigating this funding landscape. We connect you to resources, expertise, and potential funding pathways within BC's innovation ecosystem. Explore our programs and network with us to strengthen your capital strategy.</div></details>
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"tailored programs and funding for social enterprises, Indigenous businesses, or women entrepreneurs"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Impact Investing (Vancity Credit Union / Vancity Community Investment Bank (VCIB)) · Community Investment Programs (Vancity Credit Union / Vancity Community Investment Bank (VCIB)) · Small Business Loans (Community Futures BC) · Business Loans (Women's Enterprise Centre (WEC))</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Develop and clearly promote specialized programs or resources within Innovate BC for specific demographics or venture types, and feature them prominently on the Startup Funding BC page.</div>
+  <ul class="gqueries"><li>What organizations support community innovation startups in BC?</li></ul>
+  <details class="gen-wrap"><summary>📝 View Generated Content</summary><div class="gen-body"><h3>Innovate BC: Championing Tailored Programs and Funding for Social Enterprises, Indigenous Businesses, and Women Entrepreneurs</h3><br><br>Innovate BC understands that groundbreaking innovation often emerges from diverse perspectives. We are dedicated to fostering an inclusive entrepreneurial ecosystem, recognizing the unique challenges and immense potential of <strong>tailored programs and funding for social enterprises, Indigenous businesses, or women entrepreneurs</strong> across British Columbia. While our core funding programs are open to all eligible BC startups, Innovate BC actively champions the development and accessibility of specialized support, connecting these vital community innovation sectors with the resources they need to thrive.<br><br><h4>Why Specialized Support is Essential</h4><br><br>Community innovation startups often address specific societal needs, requiring bespoke approaches to funding and mentorship. Supporting these ventures is not only equitable but also crucial for building a resilient, diverse, and impactful BC economy. Innovate BC recognizes that traditional funding models may not always fit the unique structures or missions of these enterprises.<br><br><ul><li>  <strong>Social Enterprises:</strong> Driven by a dual mission of profit and positive social or environmental impact, requiring patient capital and impact measurement expertise.</li>
+<li>  <strong>Indigenous Businesses:</strong> Fostering economic reconciliation and self-determination, often rooted in community values and requiring culturally appropriate support.</li>
+<li>  <strong>Women Entrepreneurs:</strong> Overcoming systemic barriers to access capital and networks, benefiting from targeted mentorship and funding initiatives.</li>
+</ul>
+<h4>Innovate BC's Role in Inclusive Innovation</h4><br><br>Innovate BC plays a pivotal role in strengthening BC's innovation landscape for all. We are committed to identifying, promoting, and, where appropriate, developing resources that meet the specific needs of these groups. Our goal is to ensure every innovative idea, regardless of its origin, has the opportunity to succeed. We actively work with partners across the province to build a robust network of support.<br><br>Explore our initiatives and discover how Innovate BC can help accelerate your venture and connect you with the right resources.</div></details>
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"Mentorship and Coaching"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>BC Venture Acceleration Program (BCVAP) · Techstars Vancouver powered by Telus · Alacrity Canada · VentureLabs (UBC)</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Clarify if the Ignite program or Innovate BC's broader ecosystem connects recipients with mentors or offers coaching. If not, consider adding value-added resources or partnerships for funded projects.</div>
+  <ul class="gqueries"><li>What startup accelerators or programs support early-stage tech startups in BC?</li></ul>
+  <details class="gen-wrap"><summary>📝 View Generated Content</summary><div class="gen-body"><h3>Innovate BC Funding: Connecting You to Mentorship and Coaching in BC's Tech Ecosystem</h3><br><br>Early-stage tech startups in British Columbia thrive not just on capital, but also on invaluable guidance. Innovate BC understands the critical role <strong>Mentorship and Coaching</strong> play in accelerating growth, navigating challenges, and refining business strategies. While our core mission is to provide non-dilutive funding, we actively leverage our extensive network to ensure funded ventures gain access to the strategic support they need to succeed.<br><br><h4>Fueling Your Innovation Journey with Capital</h4>
+Innovate BC provides crucial financial support designed to propel your early-stage tech startup forward.
+<ul><li>  <strong>Non-Dilutive Capital:</strong> Our flagship Ignite Program offers up to $750,000 for BC-based consortia tackling complex challenges, fueling research commercialization and product development. Our various programs empower your technical progress without equity dilution.</li>
+<li>  <strong>Catalyst for Growth:</strong> Beyond direct financial investment, our funding acts as a validation stamp, often unlocking further private investment and opening doors within the vibrant BC tech community.</li>
+</ul>
+<h4>Navigating BC's Mentorship & Coaching Landscape</h4>
+Innovate BC acts as a gateway to the broader support ecosystem. While we don't directly offer in-house mentorship programs, we connect you to the best resources available.
+<ul><li>  <strong>Ecosystem Connections:</strong> We are deeply embedded in British Columbia’s innovation landscape. We partner with and refer startups to a wide array of accelerators, incubators, and industry-specific mentorship programs across the province, helping you find the right fit.</li>
+<li>  <strong>Strategic Referrals:</strong> For our funded companies, we actively facilitate introductions to relevant industry experts, seasoned entrepreneurs, and specialized coaches. We connect you with resources like the BC Venture Acceleration Program, Techstars, Alacrity Canada, and other regional support networks for tailored advice on product-market fit, fundraising, and scaling operations.</li>
+</ul>
+Ready to fuel your startup and access unparalleled support? Learn more about Innovate BC's funding programs and how we connect you to the resources for success.</div></details>
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"comprehensive business support (mentorship, coaching, training, pitch events)"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>BC Acceleration Network (BCAN) · New Ventures BC Competition · Foresight Canada · Creative Destruction Lab - West (CDL-West)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Expand the description of 'Startup Funding BC' to emphasize its role in connecting founders not just to funding, but also to extensive entrepreneurial support services like mentorship, business coaching, investor readiness training, and pitch events.</div>
+  <ul class="gqueries"><li>What funding opportunities are available for technology startups in British Columbia?</li></ul>
+  <details class="gen-wrap"><summary>📝 View Generated Content</summary><div class="gen-body"><h3>Startup Funding BC: Comprehensive Business Support for British Columbia's Tech Founders</h3><br><br>Innovate BC's <strong>Startup Funding BC</strong> isn't just about securing capital; it's a strategic pathway designed to propel technology startups in British Columbia towards sustainable growth. We understand that success requires more than just investment. Our programs directly address the critical need for <strong>comprehensive business support, mentorship, coaching, training, and pitch events</strong> to help founders thrive at every stage of their journey.<br><br><h4>Holistic Support for BC Tech Startups</h4><br><br>Our approach goes beyond traditional funding, integrating vital resources to maximize your startup's potential:<br><br><ul><li>  <strong>Access to Capital:</strong> We connect eligible BC tech startups with various funding opportunities, from grants to equity investments, helping you secure the financial resources needed to innovate and scale your vision.</li>
+<li>  <strong>Expert Mentorship & Business Coaching:</strong> Benefit from personalized guidance from seasoned entrepreneurs and industry leaders. Our network provides strategic advice, operational insights, and problem-solving support tailored to your unique challenges.</li>
+<li>  <strong>Investor Readiness & Pitch Training:</strong> Prepare confidently for investor interactions. Our specialized training programs refine your business model, strengthen your value proposition, and perfect your pitch delivery for maximum impact at critical funding events.</li>
+<li>  <strong>Strategic Networking & Pitch Events:</strong> Gain unparalleled access to a vibrant ecosystem of investors, partners, and peers. Participate in exclusive pitch events and workshops designed to expand your network and showcase your innovation to a wider audience.</li>
+</ul>
+Innovate BC is committed to fostering a robust tech ecosystem where innovation flourishes. Discover how Startup Funding BC can empower your venture.<br><br>[Learn More About Startup Funding BC and Apply Today](https://www.innovatebc.ca/programs/startup-funding-bc)</div></details>
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#2a9d8f"></span>
+    <span class="gkw">"detailed eligibility requirements (e.g., partnership criteria, revenue/financing thresholds, corporate status)"</span>
+    <span class="gtype-b" style="background:#2a9d8f22;color:#2a9d8f;border:1px solid #2a9d8f44">ELIGIBILITY</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Innovate BC Ignite Program · New Ventures BC Competition · Creative Destruction Lab - West (CDL-West) · NRC IRAP</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Provide clearer guidance within the 'Startup Funding BC' portal on the specific eligibility criteria for various funding programs, such as requirements for partnerships, revenue/financing caps, or Canadian Controlled Private Corporation (CCPC) status.</div>
+  <ul class="gqueries"><li>What funding opportunities are available for technology startups in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"Investor Access and Readiness"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Techstars Vancouver powered by Telus · VentureLabs (UBC) · Foresight Canada · Spring Activator</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Highlight how successfully funded and de-risked projects through Ignite naturally attract investor interest. Explore if Innovate BC offers follow-up programs or connections to its investor network for successful Ignite projects.</div>
+  <ul class="gqueries"><li>What startup accelerators or programs support early-stage tech startups in BC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"extensive 1-on-1 mentorship"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>New Ventures BC Competition · SheBoot · Creative Destruction Lab · Communitech Fierce Founders Accelerator</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Add explicit details on the type and extent of mentorship (e.g., 1-on-1, expert-led) available directly through Innovate BC's Startup Funding BC programs.</div>
+  <ul class="gqueries"><li>Are there startup competitions in Canada that provide mentorship and funding?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"intensive mentorship and strategic guidance"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>New Ventures BC (NVBC) Competition · Venture Acceleration Program (VAP) · entrepreneurship@UBC (e@UBC) CORE Programs · Launch Academy</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Describe the mentorship components within Startup Funding BC, specifying types of mentors (e.g., experienced entrepreneurs, EiRs, industry experts) and the strategic guidance provided.</div>
+  <ul class="gqueries"><li>What are the best programs for early-stage startups in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#2a9d8f"></span>
+    <span class="gkw">"non-profits and charities"</span>
+    <span class="gtype-b" style="background:#2a9d8f22;color:#2a9d8f;border:1px solid #2a9d8f44">ELIGIBILITY</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>BC Social Innovation & Climate Action Partner Fund · Vancity · Coast Capital Savings Community Foundation · Vancouver Foundation</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Clarify if Startup Funding BC programs are accessible to non-profits and charities that are tech-enabled or innovative, or explicitly state the focus is on for-profit ventures.</div>
+  <ul class="gqueries"><li>What grants or funding programs support social enterprises in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"mentorship, expert advice, business coaching, and development workshops"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>BC Venture Acceleration Program (BCVAP) (Innovate BC) · Business Development Services (Community Futures BC) · Business Advice and Training (Women's Enterprise Centre (WEC)) · Acceleration Program (Coast Capital Savings Innovation Hub (via Radius SFU))</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Update the Startup Funding BC page to explicitly highlight that it provides access to (or links to resources for) mentorship, expert advice, coaching, and business development workshops offered by Innovate BC's programs like BCVAP.</div>
+  <ul class="gqueries"><li>What organizations support community innovation startups in BC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#06b6d4"></span>
+    <span class="gkw">"extensive network access (e.g., global, national networks)"</span>
+    <span class="gtype-b" style="background:#06b6d422;color:#06b6d4;border:1px solid #06b6d444">INTEGRATION</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Aboriginal Financial Institutions (AFIs) Network & Lending (NACCA) · Local Community Foundation Grants (CFC) · Interest-Free Loans for Women and Non-Binary Led Ventures (The Radicle) · Social Innovation Incubation & Network Programs (CSI)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Quantify or provide examples of the networks and partnerships Innovate BC provides access to, specifying their reach (e.g., provincial, national, international connections).</div>
+  <ul class="gqueries"><li>What funding opportunities exist for social impact startups in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"Community & Network Access"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Techstars Vancouver powered by Telus · VentureLabs (UBC) · Spring Activator</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 If applicable, highlight how Innovate BC's broader ecosystem offers community and networking opportunities to Ignite recipients, or consider internal initiatives to foster connections among funded startups.</div>
+  <ul class="gqueries"><li>What startup accelerators or programs support early-stage tech startups in BC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"specific funding amounts (grants, prizes, investments)"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Innovate BC Ignite Program · New Ventures BC Competition · Alacrity Canada</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 The 'Startup Funding BC' portal should explicitly mention the range and types of specific financial values (e.g., 'up to $750,000 for R&D projects', 'over $250,000 in cash prizes', 'equity investments from $100,000 to $500,000') accessible through the programs it links to.</div>
+  <ul class="gqueries"><li>What funding opportunities are available for technology startups in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"non-dilutive grants, non-repayable contributions, or refundable tax credits"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Foresight Canada · NRC IRAP · SR&ED Tax Incentive Program</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Highlight that 'Startup Funding BC' connects founders to various financial mechanisms, including non-dilutive funding, non-repayable grants, and refundable tax credits, explaining the benefits of each.</div>
+  <ul class="gqueries"><li>What funding opportunities are available for technology startups in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"specialized sector focus (e.g., cleantech, science-based ventures, SaaS, cybersecurity)"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Foresight Canada · Creative Destruction Lab - West (CDL-West) · Alacrity Canada</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Clarify that the 'Startup Funding BC' portal helps founders identify and connect with programs tailored to specific technology sectors or venture types, such as cleantech or SaaS.</div>
+  <ul class="gqueries"><li>What funding opportunities are available for technology startups in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"up to $100,000 in grant funding"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>New Ventures BC Competition · SheBoot · Communitech Fierce Founders Accelerator</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Clearly state specific direct funding amounts, grant opportunities, or investment ranges available through Innovate BC's Startup Funding BC initiatives.</div>
+  <ul class="gqueries"><li>Are there startup competitions in Canada that provide mentorship and funding?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"intensive 6-week program"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>SheBoot · Creative Destruction Lab · Communitech Fierce Founders Accelerator</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Detail the structured nature, duration (e.g., X-week program, X-month accelerator), and typical timeline of Innovate BC's direct Startup Funding BC programs or associated initiatives.</div>
+  <ul class="gqueries"><li>Are there startup competitions in Canada that provide mentorship and funding?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"build investor readiness"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>New Ventures BC (NVBC) Competition · Venture Acceleration Program (VAP) · entrepreneurship@UBC (e@UBC) CORE Programs</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Highlight how Startup Funding BC specifically prepares companies for investment, including pitch training, financial modeling support, or investor introductions.</div>
+  <ul class="gqueries"><li>What are the best programs for early-stage startups in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"Structured Education / workshops and online resources"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>New Ventures BC (NVBC) Competition · entrepreneurship@UBC (e@UBC) CORE Programs · Launch Academy</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Detail any educational components, workshops, webinars, or online resources provided by Startup Funding BC or integrated through Innovate BC's network, especially on topics like business planning or market validation.</div>
+  <ul class="gqueries"><li>What are the best programs for early-stage startups in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"Network Access: Connects founders to the broader BC tech ecosystem"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Venture Acceleration Program (VAP) · entrepreneurship@UBC (e@UBC) CORE Programs · Launch Academy</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Emphasize how Startup Funding BC facilitates connections to investors, partners, and the wider entrepreneurial community in BC.</div>
+  <ul class="gqueries"><li>What are the best programs for early-stage startups in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"loans"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>BC Social Innovation & Climate Action Partner Fund · Vancity · Futurpreneur Canada</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Clarify if Startup Funding BC programs include or facilitate access to loan-based financing, or differentiate from loan programs for social enterprises.</div>
+  <ul class="gqueries"><li>What grants or funding programs support social enterprises in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#8338ec"></span>
+    <span class="gkw">"explicit focus on generating social, environmental, or cultural returns and positive community impact"</span>
+    <span class="gtype-b" style="background:#8338ec22;color:#8338ec;border:1px solid #8338ec44">OUTCOME_CLAIM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Impact Investing (Vancity Credit Union / Vancity Community Investment Bank (VCIB)) · Impact Investment (Raven Indigenous Capital Partners) · Economic Development Programs (New Relationship Trust (NRT))</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Articulate how Innovate BC's support and funded innovations lead to measurable social, environmental, or cultural benefits for communities, aligning with broader impact narratives.</div>
+  <ul class="gqueries"><li>What organizations support community innovation startups in BC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"tailored support for Indigenous entrepreneurs"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Indigenous Entrepreneur Startup Program (Futurpreneur Canada) · Indigenous Entrepreneur Program (BDC) · Aboriginal Financial Institutions (AFIs) Network & Lending (NACCA)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Highlight specific programs or connections Innovate BC offers for Indigenous entrepreneurs in B.C., or explicitly detail how their resources cater to these groups.</div>
+  <ul class="gqueries"><li>What funding opportunities exist for social impact startups in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"advisory services"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Financing & Advisory Services (BDC) · Indigenous Entrepreneur Program (BDC) · Aboriginal Financial Institutions (AFIs) Network & Lending (NACCA)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Clarify the scope of 'mentorship and resources' to explicitly include comprehensive 'advisory services' for entrepreneurs.</div>
+  <ul class="gqueries"><li>What funding opportunities exist for social impact startups in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"No equity taken"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>BC Venture Acceleration Program (BCVAP) · VentureLabs (UBC)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly state 'No equity taken' or 'Grant-based funding, no equity required' in the program description to highlight this significant benefit compared to equity-seeking accelerators/investors.</div>
+  <ul class="gqueries"><li>What startup accelerators or programs support early-stage tech startups in BC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#8338ec"></span>
+    <span class="gkw">"Business and Market Validation"</span>
+    <span class="gtype-b" style="background:#8338ec22;color:#8338ec;border:1px solid #8338ec44">OUTCOME_CLAIM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>BC Venture Acceleration Program (BCVAP) · Foresight Canada</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Emphasize how the funding for pilot projects and demos helps companies validate the market application and business model for their innovative technology, in addition to R&D.</div>
+  <ul class="gqueries"><li>What startup accelerators or programs support early-stage tech startups in BC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"Deep Tech / High-Growth Focus"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>VentureLabs (UBC) · Alacrity Canada</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly position the Ignite Program as ideal for 'deep tech' or 'high-growth potential' startups leveraging cutting-edge research, aligning its eligibility and outcomes more clearly with these highly sought-after categories.</div>
+  <ul class="gqueries"><li>What startup accelerators or programs support early-stage tech startups in BC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"guidance on federal funding opportunities (e.g., IRAP, SR&ED)"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>NRC IRAP · SR&ED Tax Incentive Program</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Position 'Startup Funding BC' as a comprehensive resource that also guides founders to relevant federal funding programs and tax incentives like NRC IRAP and SR&ED.</div>
+  <ul class="gqueries"><li>What funding opportunities are available for technology startups in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"specifically designed to support women founders"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>SheBoot · Communitech Fierce Founders Accelerator</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Highlight specific target demographics (e.g., women founders, Indigenous entrepreneurs, specific tech sectors) that Innovate BC's Startup Funding BC programs prioritize or have specialized support for.</div>
+  <ul class="gqueries"><li>Are there startup competitions in Canada that provide mentorship and funding?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"focusing on investor readiness, due diligence, valuation, and pitching"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>SheBoot · Communitech Fierce Founders Accelerator</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Articulate the specific learning objectives or strategic areas of focus (e.g., investor readiness, market validation, scaling strategies) covered by Innovate BC's Startup Funding BC initiatives.</div>
+  <ul class="gqueries"><li>Are there startup competitions in Canada that provide mentorship and funding?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"Free / equity-free participation"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>New Ventures BC (NVBC) Competition · entrepreneurship@UBC (e@UBC) CORE Programs</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Clearly state if any components or initial consultations for Startup Funding BC are free, or if specific grants offered are non-repayable or equity-free.</div>
+  <ul class="gqueries"><li>What are the best programs for early-stage startups in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"well-suited for first-time founders"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>New Ventures BC (NVBC) Competition · entrepreneurship@UBC (e@UBC) CORE Programs</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly state that Startup Funding BC is ideal for first-time founders, highlighting how the program supports their unique needs.</div>
+  <ul class="gqueries"><li>What are the best programs for early-stage startups in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"mentorship"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Futurpreneur Canada · Spring Activator</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Highlight any structured mentorship opportunities or support services integrated into Startup Funding BC programs beyond investor connections.</div>
+  <ul class="gqueries"><li>What grants or funding programs support social enterprises in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"poverty reduction, climate action, affordable housing, community economic development"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>BC Social Innovation & Climate Action Partner Fund · Vancity</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly list specific social and environmental impact areas like 'poverty reduction,' 'climate action,' 'affordable housing,' and 'community economic development' that tech-enabled social enterprises supported by Innovate BC can address.</div>
+  <ul class="gqueries"><li>What grants or funding programs support social enterprises in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#8338ec"></span>
+    <span class="gkw">"measurable impact"</span>
+    <span class="gtype-b" style="background:#8338ec22;color:#8338ec;border:1px solid #8338ec44">OUTCOME_CLAIM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>BC Social Innovation & Climate Action Partner Fund · Coast Capital Savings Community Foundation</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Emphasize how Innovate BC supports or evaluates projects for their 'measurable social or environmental impact' in addition to commercial potential and scaling.</div>
+  <ul class="gqueries"><li>What grants or funding programs support social enterprises in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"support for women/non-binary led ventures"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Women in Tech Fund (BDC Capital) · Interest-Free Loans for Women and Non-Binary Led Ventures (The Radicle)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Detail support or specific connections for women/non-binary led ventures, aligning with relevant initiatives or partners.</div>
+  <ul class="gqueries"><li>What funding opportunities exist for social impact startups in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#2a9d8f"></span>
+    <span class="gkw">"clear social/environmental impact assessment or alignment (e.g., UN SDGs)"</span>
+    <span class="gtype-b" style="background:#2a9d8f22;color:#2a9d8f;border:1px solid #2a9d8f44">ELIGIBILITY</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Interest-Free Loans for Women and Non-Binary Led Ventures (The Radicle) · Impact Venture Investment Platform (SVX)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Describe criteria for defining and assessing social impact for eligible startups, or mention alignment with specific frameworks like the UN SDGs if applicable to Innovate BC's mandate.</div>
+  <ul class="gqueries"><li>What funding opportunities exist for social impact startups in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"investment prize from a syndicate of angel investors"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>OKGN Angel Summit</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Explicitly differentiate NVBC's cash prizes as non-dilutive, contrasting them with equity-based 'investment prizes' offered by competitors.</div>
+  <ul class="gqueries"><li>What are the best startup competitions in British Columbia for tech startups?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"direct investment"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>OKGN Angel Summit</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Clearly state that NVBC awards are 'prizes' rather than 'direct investments' to manage expectations and highlight the non-dilutive nature of the funding.</div>
+  <ul class="gqueries"><li>What are the best startup competitions in British Columbia for tech startups?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"investor readiness training"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>OKGN Angel Summit</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Update the 'Protocol' or 'Outcomes' sections to specifically mention 'investor readiness training' as a component of the intensive coaching and workshops offered.</div>
+  <ul class="gqueries"><li>What are the best startup competitions in British Columbia for tech startups?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"direct feedback from angels"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>OKGN Angel Summit</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 If applicable, add specific language in the 'Protocol' or 'Outcomes' sections detailing opportunities for 'direct feedback from active investors' or 'angel investors' during mentorship or pitch stages.</div>
+  <ul class="gqueries"><li>What are the best startup competitions in British Columbia for tech startups?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"non-dilutive seed funding"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>LaunchPad Competition</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Incorporate the term 'non-dilutive' when describing the cash prizes (e.g., 'significant non-dilutive cash prizes') to emphasize this key benefit for startups.</div>
+  <ul class="gqueries"><li>What are the best startup competitions in British Columbia for tech startups?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"up to $60,000 in collateral-free financing"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Futurpreneur Canada</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Differentiate from competitors offering direct financing, focusing on BCVAP's role in investment readiness and connections, rather than direct capital.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#06b6d4"></span>
+    <span class="gkw">"matched with up to $40,000 from the Business Development Bank of Canada - BDC"</span>
+    <span class="gtype-b" style="background:#06b6d422;color:#06b6d4;border:1px solid #06b6d444">INTEGRATION</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Futurpreneur Canada</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Clarify if BCVAP has any formal funding partnerships or direct recommendations for funding sources (e.g., with BDC or other financial institutions).</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"dedicated mentor for up to two years"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Futurpreneur Canada</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Specify the maximum duration of mentorship and ongoing support available through BCVAP and regional accelerators, and emphasize the 'dedicated' nature of mentor relationships.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#8338ec"></span>
+    <span class="gkw">"strong accountability through mentorship"</span>
+    <span class="gtype-b" style="background:#8338ec22;color:#8338ec;border:1px solid #8338ec44">OUTCOME_CLAIM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Futurpreneur Canada</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Add explicit language about 'accountability' as a direct benefit and outcome of BCVAP's mentorship and program structure.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"structured 12-18 month program"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>DMZ (Toronto Metropolitan University)</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Clarify if BCVAP offers pathways for extended engagement or longer program durations for certain ventures, or emphasize the intensity/focus of its 3-12 month model.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"expert workshops on product development, sales, marketing"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>DMZ (Toronto Metropolitan University)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly list 'product development', 'sales strategies', and 'marketing' as key workshop topics or areas of mentorship within BCVAP's offerings.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"connections to investors and industry partners"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>DMZ (Toronto Metropolitan University)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Emphasize explicit connections to investors and industry partners as a core benefit of participating in the BCVAP network.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"co-working space and a vibrant community"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>DMZ (Toronto Metropolitan University)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 If applicable, explicitly mention access to co-working spaces and highlight the 'vibrant community' aspect provided by regional Venture Accelerator organizations.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"Women Founders Stream"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>DMZ (Toronto Metropolitan University)</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 If available, highlight any specific initiatives, streams, or targeted support for women founders or other underrepresented groups within BCVAP or its regional partners.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"does not take equity or charge fees"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>DMZ (Toronto Metropolitan University)</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Clarify the fee structure, emphasizing instances where fees are consistently waived or if there are no fees for the core BCVAP program, to be more competitive with 'no fees' claims.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#457b9d"></span>
+    <span class="gkw">"one of the world's largest urban innovation hubs"</span>
+    <span class="gtype-b" style="background:#457b9d22;color:#457b9d;border:1px solid #457b9d44">TRUST_SIGNAL</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>MaRS Discovery District</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Emphasize Innovate BC's unique trust signals, such as its status as a crown agency or its provincial impact, rather than a physical hub scale.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"Supports Canadian startups across various sectors, including Health, FinTech, Enterprise, and Cleantech"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>MaRS Discovery District</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly list the key technology sectors or verticals supported by BCVAP and its regional accelerators (e.g., Healthtech, FinTech, Cleantech).</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"from early-stage to scale-up"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>MaRS Discovery District</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Clearly define BCVAP's focus on idea- to early-stage ventures, and if applicable, mention pathways or connections to support for later 'scale-up' stages within BC.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"advisory support from sector-specific experts"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>MaRS Discovery District</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Emphasize the availability and expertise of sector-specific experts and advisors within the BCVAP network.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#06b6d4"></span>
+    <span class="gkw">"connections to corporate partners"</span>
+    <span class="gtype-b" style="background:#06b6d422;color:#06b6d4;border:1px solid #06b6d444">INTEGRATION</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>MaRS Discovery District</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly mention connections to corporate partners as a valuable benefit of the BCVAP network.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#8338ec"></span>
+    <span class="gkw">"access to market opportunities"</span>
+    <span class="gtype-b" style="background:#8338ec22;color:#8338ec;border:1px solid #8338ec44">OUTCOME_CLAIM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>MaRS Discovery District</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Add 'access to market opportunities' as an explicit outcome or benefit of BCVAP's market validation and growth strategy support.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"introductions to funding sources"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>MaRS Discovery District</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly state that BCVAP facilitates 'introductions to funding sources' and investors as part of its investment readiness support.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#8338ec"></span>
+    <span class="gkw">"helping them navigate complex growth challenges"</span>
+    <span class="gtype-b" style="background:#8338ec22;color:#8338ec;border:1px solid #8338ec44">OUTCOME_CLAIM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>MaRS Discovery District</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Add language about helping founders 'navigate complex growth challenges' as a key benefit of BCVAP's mentorship and strategic support.</div>
+  <ul class="gqueries"><li>What programs help first-time startup founders in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#8338ec"></span>
+    <span class="gkw">"raised over $2.5 billion in equity"</span>
+    <span class="gtype-b" style="background:#8338ec22;color:#8338ec;border:1px solid #8338ec44">OUTCOME_CLAIM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Creative Destruction Lab</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Publish specific, measurable success metrics, testimonials, or data points highlighting the outcomes and impact (e.g., follow-on funding raised, companies scaled, jobs created) of ventures supported by Innovate BC.</div>
+  <ul class="gqueries"><li>Are there startup competitions in Canada that provide mentorship and funding?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"Funding Opportunity: Over $250,000 in cash and prizes"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>New Ventures BC (NVBC) Competition</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Explicitly detail the specific funding amounts, grants, loans, or prize pools available through Startup Funding BC, including past award examples or average funding amounts.</div>
+  <ul class="gqueries"><li>What are the best programs for early-stage startups in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#f4a261"></span>
+    <span class="gkw">"patient capital"</span>
+    <span class="gtype-b" style="background:#f4a26122;color:#f4a261;border:1px solid #f4a26144">PRICING_TERM</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Vancity</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Clarify if Innovate BC or its connected investors offer 'patient capital' or flexible repayment/investment terms suitable for social enterprises.</div>
+  <ul class="gqueries"><li>What grants or funding programs support social enterprises in British Columbia?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"substantial grants ($100,000-$300,000) for research and development projects"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Ignite Program (Innovate BC)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Elaborate on the Startup Funding BC page about the specific types and typical ranges of grants available through Innovate BC's programs, such as the Ignite Program's focus on R&D projects.</div>
+  <ul class="gqueries"><li>What organizations support community innovation startups in BC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#06b6d4"></span>
+    <span class="gkw">"a capital raising platform that connects ventures with impact investors"</span>
+    <span class="gtype-b" style="background:#06b6d422;color:#06b6d4;border:1px solid #06b6d444">INTEGRATION</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Capital Raising Platform (SVX (Social Venture Connexion))</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Evaluate the feasibility of Innovate BC partnering with or developing its own mechanism to connect funded ventures to a network of impact investors, particularly relevant for social innovation startups.</div>
+  <ul class="gqueries"><li>What organizations support community innovation startups in BC?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"incubation and acceleration programs"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Social Innovation Incubation & Network Programs (CSI)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 Clearly list or describe incubation and acceleration programs available through Innovate BC or its partners, as part of its 'resources'.</div>
+  <ul class="gqueries"><li>What funding opportunities exist for social impact startups in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#fb923c"></span>
+    <span class="gkw">"loans for specific project types (e.g., real estate, community housing, clean energy)"</span>
+    <span class="gtype-b" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c44">USE_CASE</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Impact-Dedicated Banking & Loans (VCIB)</strong></span>
+    <span class="has-yes">✓ Brand has this — needs content</span>
+  </div>
+  <div class="gaction">📌 List common or specific project types that social impact startups can secure funding for through Innovate BC's connections, beyond just 'innovation' generally.</div>
+  <ul class="gqueries"><li>What funding opportunities exist for social impact startups in Canada?</li></ul>
+  
+</div>
+<div class="gap-card">
+  <div class="gap-top">
+    <span class="gdot" style="background:#e63946"></span>
+    <span class="gkw">"community and coworking space"</span>
+    <span class="gtype-b" style="background:#e6394622;color:#e63946;border:1px solid #e6394644">FEATURE_BENEFIT</span>
+    <span class="gfreq">1 responses</span>
+  </div>
+  <div class="gmeta">
+    <span class="gcomps">Used by: <strong>Social Innovation Incubation & Network Programs (CSI)</strong></span>
+    <span class="has-no">✗ Brand lacks this feature</span>
+  </div>
+  <div class="gaction">📌 Evaluate if Innovate BC offers physical co-working or community spaces, or partners with organizations that do, and add this to its stated benefits if applicable.</div>
+  <ul class="gqueries"><li>What funding opportunities exist for social impact startups in Canada?</li></ul>
+  
+</div></div>
+</section>
+
+<section>
+  <div class="sec-title">Visibility by Persona</div>
+  <table class="tbl">
+    <thead><tr><th>Persona</th><th>Responses</th><th>Avg Visibility</th><th>Mention Rate</th><th>Consideration</th><th>Avg Rank</th></tr></thead>
+    <tbody><tr><td class="td-persona" title="BC Tech Startup Founder. Age 25-45, Vancouver/Victoria/Kelowna or other BC tech hubs, Low-Moderate income. Building a technology startup, seeking startup competitions, early-stage funding programs, accelerator programs, BC tech ecosystem mentorship, investor introductions. Focused on fundraising, product-market fit, and scaling. 6-12 month priority.">BC Tech Startup Founder. Age 25-45, Vancouver/Victoria/Kelowna or other BC tech hubs, Low-…</td><td class="mono">6</td><td><div class="btrack"><div class="bfill" style="width:100%;background:#0ea5e9"></div><span class="bval">50.0</span></div></td><td class="mono">50.0%</td><td class="mono">50.0</td><td class="mono">#1</td></tr>
+<tr><td class="td-persona" title="First-Time Startup Founder. Age 28-50, across BC including Vancouver, Surrey, Burnaby, Victoria, and Kelowna, Low-Moderate income. First venture; needs business planning, investor readiness, pitching, mentorship from experienced entrepreneurs. Wants structured programs combining founder education with early funding access.">First-Time Startup Founder. Age 28-50, across BC including Vancouver, Surrey, Burnaby, Vic…</td><td class="mono">6</td><td><div class="btrack"><div class="bfill" style="width:93%;background:#22c55e"></div><span class="bval">46.7</span></div></td><td class="mono">50.0%</td><td class="mono">46.7</td><td class="mono">#1.3</td></tr>
+<tr><td class="td-persona" title="BC Impact and Social Innovation Founder. Age 30-55, Rural BC, Indigenous communities, or smaller urban centers such as Kamloops, Nanaimo, Prince George, or Kelowna, Low-Moderate income. Often women-led or community-led. Seeking social enterprise funding, impact investment programs, grants for community-based initiatives, government funding for social innovation.">BC Impact and Social Innovation Founder. Age 30-55, Rural BC, Indigenous communities, or s…</td><td class="mono">6</td><td><div class="btrack"><div class="bfill" style="width:86%;background:#f59e0b"></div><span class="bval">43.3</span></div></td><td class="mono">50.0%</td><td class="mono">46.7</td><td class="mono">#1.3</td></tr>
+</tbody>
+  </table>
+</section>
+
+
+
+<section>
+  <div class="sec-title">Per-Query Performance — top 30 by visibility</div>
+  <table class="tbl">
+    <thead><tr><th>Query</th><th>Visibility</th><th>Consideration</th><th>Avg Rank</th><th>Responses</th><th>LLMs</th></tr></thead>
+    <tbody><tr><td class="td-query">What are the best startup competitions in British Columbia for tech startups?</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">What startup accelerators or programs support early-stage tech startups in BC?</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">What funding opportunities are available for technology startups in British Columbia?</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">What programs help first-time startup founders in Canada?</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">45.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">Are there startup competitions in Canada that provide mentorship and funding?</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">What organizations support community innovation startups in BC?</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">What funding opportunities exist for social impact startups in Canada?</td><td class="mono fw7" style="color:#f59e0b">50.0</td><td class="mono" style="color:#f59e0b">50.0</td><td class="mono">#1</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">What are the best programs for early-stage startups in British Columbia?</td><td class="mono fw7" style="color:#f59e0b">40.0</td><td class="mono" style="color:#f59e0b">45.0</td><td class="mono">#2</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+<tr><td class="td-query">What grants or funding programs support social enterprises in British Columbia?</td><td class="mono fw7" style="color:#f59e0b">30.0</td><td class="mono" style="color:#f59e0b">40.0</td><td class="mono">#2</td><td class="mono">2</td><td class="td-llms">gemini · openai</td></tr>
+</tbody>
+  </table>
+</section>
+
+</main>
+<footer>
+  PetalAI Pipeline &nbsp;·&nbsp; Innovate BC / Startup Funding BC
+  &nbsp;·&nbsp; 18 responses &nbsp;·&nbsp; 69 gaps &nbsp;·&nbsp;
+  5 generated &nbsp;·&nbsp; 2026-03-10 13:09
+</footer>
+</body></html>
